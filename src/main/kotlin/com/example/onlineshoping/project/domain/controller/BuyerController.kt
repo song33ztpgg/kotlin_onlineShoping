@@ -15,9 +15,7 @@ class BuyerController() {
     }
 
     @PutMapping("/buyers/{buyerId}")
-    fun updateUserInfo(
-        @PathVariable buyerId: Long
-    ):RequestEntity<Unit>{
+    fun updateUserInfo(@PathVariable buyerId: Long):RequestEntity<Unit>{
         TODO()
     }
 }
