@@ -1,0 +1,10 @@
+package com.example.onlineshoping.project.domain.buyer.dto
+
+data class BuyerResponse(
+    val id:Long,
+    val password:String,
+    val name:String,
+    val phoneNumber:String,
+    val address:String,
+    val buyerBalance:Long
+)
