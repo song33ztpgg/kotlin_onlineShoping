@@ -7,7 +7,5 @@ import org.springframework.boot.runApplication
 class OnlineShopingApplication
 
 fun main(args: Array<String>) {
-    print("ch")
-
     runApplication<OnlineShopingApplication>(*args)
 }

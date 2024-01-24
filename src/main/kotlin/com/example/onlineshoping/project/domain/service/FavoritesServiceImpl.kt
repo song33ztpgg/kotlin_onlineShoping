@@ -1,4 +1,4 @@
 package com.example.onlineshoping.project.domain.service
 
-interface SaleHistoryService {
+class FavoritesServiceImpl {
 }

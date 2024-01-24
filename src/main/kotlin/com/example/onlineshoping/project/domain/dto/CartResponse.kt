@@ -1,8 +1,9 @@
 package com.example.onlineshoping.project.domain.dto
 
-data class SaleHistory(
+data class CartResponse(
     val id:Long,
-    val cartId:Long,
+    val productId:Long,
     val buyerId:Long,
+    val amoutn:Int,
     val status:String
 )

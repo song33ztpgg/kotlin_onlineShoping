@@ -6,6 +6,8 @@ data class ProductResponse(
     val category:String,
     val name:String,
     val price:Int,
+    val discountType:String,
+    val difcount:Short,
     val productInfo:String,
     val remainingStock:Int
 )

@@ -1,7 +1,7 @@
 package com.example.onlineshoping.project.domain.dto
 
-data class DiscountResponse(
+data class FavoritesResponse(
     val id:Long,
     val productId:Long,
-    val discountRate:Short?
+    val buyerId:Long
 )

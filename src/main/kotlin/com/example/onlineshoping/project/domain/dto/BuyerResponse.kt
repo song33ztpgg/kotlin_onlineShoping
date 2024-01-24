@@ -7,6 +7,6 @@ data class BuyerResponse(
     val password:String,
     val name:String,
     val phoneNumber:String,
-    val address: String,
+    val addressType: String,
     val buyerBalance:Int
 )
