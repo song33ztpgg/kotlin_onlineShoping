@@ -1,6 +1,5 @@
 package com.example.onlineshoping.project.domain.controller
 
-import com.example.onlineshoping.project.domain.dto.ProductResponse
 import org.springframework.http.RequestEntity
 import org.springframework.web.bind.annotation.*
 
@@ -9,7 +8,7 @@ class CartController() {
 
     //상품담기
     @PostMapping("/carts")
-    fun addCart(): RequestEntity<ProductResponse> {
+    fun addCart(): RequestEntity<Unit> {
         TODO()
     }
 

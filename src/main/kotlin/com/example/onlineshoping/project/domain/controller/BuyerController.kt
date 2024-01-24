@@ -1,21 +1,26 @@
 package com.example.onlineshoping.project.domain.controller
 
-import org.springframework.http.RequestEntity
-import org.springframework.web.bind.annotation.PathVariable
+import com.example.onlineshoping.project.domain.dto.request.CreateBuyer
+import com.example.onlineshoping.project.domain.dto.response.BuyerResponse
+import com.example.onlineshoping.project.domain.service.BuyerService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class BuyerController() {
+@RequestMapping("buyer")
+class BuyerController(
+    private val buyerService: BuyerService
+) {
 
-    @PostMapping("/buyers")
-    fun singupBuyer(/*@RequestBody buyerResponse: BuyerResponse*/): RequestEntity<Unit> {
-        TODO()
+    @PostMapping
+    fun singupBuyer(@RequestBody createBuyer: CreateBuyer):ResponseEntity<BuyerResponse>{
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(buyerService.singupBuyer(createBuyer))
     }
 
-    @PutMapping("/buyers/{buyerId}")
-    fun updateUserInfo(@PathVariable buyerId: Long):RequestEntity<Unit>{
-        TODO()
-    }
 }

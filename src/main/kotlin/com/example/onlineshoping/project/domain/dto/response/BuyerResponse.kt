@@ -1,6 +1,4 @@
-package com.example.onlineshoping.project.domain.dto
-
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address
+package com.example.onlineshoping.project.domain.dto.response
 
 data class BuyerResponse(
     val id:Long,

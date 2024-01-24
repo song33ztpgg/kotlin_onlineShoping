@@ -1,6 +1,6 @@
-package com.example.onlineshoping.project.domain.dto
+package com.example.onlineshoping.project.domain.dto.response
 
-import java.util.Date
+import java.util.*
 
 data class OrderResponse(
     val id:Long,
@@ -8,5 +8,5 @@ data class OrderResponse(
     val buyerId:Long,
     val amount:Int,
     val status:String,
-    val orderDate:Date
+    val orderDate: Date
 )
