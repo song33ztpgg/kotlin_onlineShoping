@@ -3,15 +3,19 @@ package com.example.onlineshoping.project.domain.service
 import com.example.onlineshoping.project.domain.dto.request.AddCartRequest
 import com.example.onlineshoping.project.domain.dto.response.CartResponse
 import com.example.onlineshoping.project.domain.model.Cart
+import com.example.onlineshoping.project.domain.model.CartStatus
 import com.example.onlineshoping.project.domain.model.toResponse
 import com.example.onlineshoping.project.domain.repository.CartRepository
+import com.example.onlineshoping.project.domain.repository.OrderRepository
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class CartServiceImpl(
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val orderRepository: OrderRepository,
+    private val orderService: OrderService
 ) : CartService {
 
 
@@ -26,19 +30,30 @@ class CartServiceImpl(
                 buyer_id = request.buyerId,
                 product_id = request.productId,
                 amount = request.amount,
-                status = request.status
+                status = CartStatus.장바구니
             )
         ).toResponse()
 
     }
 
+
+    override fun paymentCart(userId:Long) {
+
+
+        val data = cartRepository.findAll().map { it.toResponse() }
+
+        val userCart = cartRepository.findByIdOrNull(userId)!!
+
+            println( userCart.id)
+//        orderService.createOder()
+    }
+
+
     override fun deleteCancelOrder() {
         TODO("Not yet implemented")
     }
 
-    override fun paymentCart() {
-        TODO("Not yet implemented")
-    }
+
 
 
 

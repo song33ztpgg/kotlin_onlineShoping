@@ -32,9 +32,11 @@ class CartController(
 
     //장바구니 결재
     //장바구니 결재 후 삭제
-    @PostMapping("/carts/pay")
-    fun paymentCart(): RequestEntity<Unit> {
-        TODO()
+    @PostMapping("/carts/pay/{userId}")
+    fun paymentCart(@PathVariable userId:Long): ResponseEntity<Unit> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(cartService.paymentCart(userId))
     }
 
     //장바구니 전체취소

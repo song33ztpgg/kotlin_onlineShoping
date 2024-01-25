@@ -1,12 +1,7 @@
 package com.example.onlineshoping.project.domain.model
 
 import com.example.onlineshoping.project.domain.dto.response.CartResponse
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table
@@ -20,8 +15,9 @@ class Cart(
     @Column(name = "amount")
     var amount:Int,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    var status:String
+    var status:CartStatus
 
     ) {
     @Id
@@ -35,6 +31,6 @@ fun Cart.toResponse():CartResponse {
         buyerId = buyer_id,
         productId = product_id,
         amount  = amount,
-        status = status
+        status = status.name
     )
 }
