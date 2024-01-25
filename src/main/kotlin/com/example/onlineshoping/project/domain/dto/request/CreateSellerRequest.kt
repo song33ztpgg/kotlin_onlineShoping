@@ -1,4 +1,7 @@
 package com.example.onlineshoping.project.domain.dto.request
 
-class CreateSellerRequest {
-}
+data class CreateSellerRequest (
+    val name:String,
+    val password:String,
+    val sellerAccount:Long
+)

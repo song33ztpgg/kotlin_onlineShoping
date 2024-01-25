@@ -6,5 +6,5 @@ data class BuyerResponse(
     val name:String,
     val phoneNumber:String,
     val addressType: String,
-    val buyerBalance:Int
+    val buyerBalance:Long
 )

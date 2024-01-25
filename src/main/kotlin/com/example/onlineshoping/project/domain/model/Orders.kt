@@ -1,5 +1,6 @@
 package com.example.onlineshoping.project.domain.model
 
+import com.example.onlineshoping.project.domain.dto.response.OrderResponse
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -12,22 +13,33 @@ import java.util.Date
 @Table
 class Orders(
     @Column(name = "buyer_id")
-    var buyer_id:Long,
+    var buyer_id: Long,
 
     @Column(name = "product_id")
     var product_id: Long,
 
     @Column(name = "amount")
-    var amount:Int,
+    var amount: Int,
 
     @Column(name = "status")
-    var status:String,
+    var status: String,
 
-    @Column(name ="order_date")
-    var order_date :Date
+    @Column(name = "order_date")
+    var order_date: Date  =  Date()
 
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+}
+
+fun Orders.toResponse(): OrderResponse {
+    return OrderResponse(
+        id = id!!,
+        buyerId = buyer_id,
+        productId = product_id,
+        amount = amount,
+        status = status,
+        orderDate = order_date
+    )
 }

@@ -1,5 +1,6 @@
 package com.example.onlineshoping.project.domain.model
 
+import com.example.onlineshoping.project.domain.dto.response.CartResponse
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -26,4 +27,14 @@ class Cart(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+}
+
+fun Cart.toResponse():CartResponse {
+    return CartResponse(
+        id = id!!,
+        buyerId = buyer_id,
+        productId = product_id,
+        amount  = amount,
+        status = status
+    )
 }

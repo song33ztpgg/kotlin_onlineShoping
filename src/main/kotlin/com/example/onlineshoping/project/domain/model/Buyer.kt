@@ -19,7 +19,7 @@ class Buyer(
     var address_type: String,
 
     @Column(name = "buyer_balance")
-    var buyer_balance: Int,
+    var buyer_balance: Long,
 
     ) {
     @Id

@@ -1,5 +1,6 @@
 package com.example.onlineshoping.project.domain.model
 
+import com.example.onlineshoping.project.domain.dto.response.ProductResponse
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -20,7 +21,7 @@ class Product(
     var name : String,
 
     @Column(name = "price")
-    var price:Int,
+    var price:Long,
 
     @Column(name = "discount_type")
     var discount_type:String,
@@ -38,4 +39,18 @@ class Product(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+}
+
+fun Product.toResponse():ProductResponse{
+    return ProductResponse(
+        id = id!!,
+        sellerId = seller_id,
+        category = category,
+        name = name,
+        price = price,
+        discountType = discount_type,
+        discount = discount,
+        productInfo = product_info,
+        remainingStock = remaining_stock
+    )
 }

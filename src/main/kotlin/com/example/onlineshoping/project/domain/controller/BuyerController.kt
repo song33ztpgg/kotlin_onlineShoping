@@ -17,10 +17,10 @@ class BuyerController(
 ) {
 
     @PostMapping
-    fun singupBuyer(@RequestBody createBuyer: CreateBuyerRequest):ResponseEntity<BuyerResponse>{
+    fun singupBuyer(@RequestBody createBuyerRequest: CreateBuyerRequest):ResponseEntity<BuyerResponse>{
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(buyerService.singupBuyer(createBuyer))
+            .body(buyerService.singupBuyer(createBuyerRequest))
     }
 
 

@@ -1,4 +1,6 @@
 package com.example.onlineshoping.project.domain.dto.request
 
-class CreateFavoritesRequest {
-}
+data class CreateFavoritesRequest (
+    val buyerId:Long,
+    val productId:Long
+)
