@@ -36,10 +36,6 @@ fun Buyer.toResponse(): BuyerResponse {
         phoneNumber = phone_number,
         addressType = address_type,
         buyerBalance = buyer_balance
-        //        phone_number =  phone_number,
-//        address_type = address_type,
-//        buyer_balance  = buyer_balance
-
     )
 
 }

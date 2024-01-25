@@ -1,6 +1,6 @@
 package com.example.onlineshoping.project.domain.controller
 
-import com.example.onlineshoping.project.domain.dto.request.CreateBuyer
+import com.example.onlineshoping.project.domain.dto.request.CreateBuyerRequest
 import com.example.onlineshoping.project.domain.dto.response.BuyerResponse
 import com.example.onlineshoping.project.domain.service.BuyerService
 import org.springframework.http.HttpStatus
@@ -17,10 +17,12 @@ class BuyerController(
 ) {
 
     @PostMapping
-    fun singupBuyer(@RequestBody createBuyer: CreateBuyer):ResponseEntity<BuyerResponse>{
+    fun singupBuyer(@RequestBody createBuyer: CreateBuyerRequest):ResponseEntity<BuyerResponse>{
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(buyerService.singupBuyer(createBuyer))
     }
+
+
 
 }

@@ -1,6 +1,6 @@
 package com.example.onlineshoping.project.domain.service
 
-import com.example.onlineshoping.project.domain.dto.request.CreateBuyer
+import com.example.onlineshoping.project.domain.dto.request.CreateBuyerRequest
 import com.example.onlineshoping.project.domain.dto.response.BuyerResponse
 import com.example.onlineshoping.project.domain.model.Buyer
 import com.example.onlineshoping.project.domain.model.toResponse
@@ -13,7 +13,7 @@ class BuyerServiceImpl(
     private val buyerRepository: BuyerRepository
 ):BuyerService {
 
-    override fun singupBuyer(request:CreateBuyer):BuyerResponse {
+    override fun singupBuyer(request:CreateBuyerRequest):BuyerResponse {
         return buyerRepository.save(
             Buyer(
                 password =  request.password,

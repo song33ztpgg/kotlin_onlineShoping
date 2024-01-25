@@ -19,16 +19,18 @@ class CartController() {
     }
 
     //장바구니 결재
+    //장바구니 결재 후 삭제
     @PostMapping("/carts/pay")
     fun paymentCart(): RequestEntity<Unit> {
         TODO()
     }
 
-    //장바구니 결재 후 삭제
+    //장바구니 전체취소
     @DeleteMapping("/carts")
-    fun deleteOrderCart(): RequestEntity<Unit> {
+    fun deleteCart(): RequestEntity<Unit> {
         TODO()
     }
+
 
     //주문 취소
     @PutMapping("/orders/{orderId}/cancel")
@@ -36,18 +38,4 @@ class CartController() {
         TODO()
     }
 
-
-    //즐겨찾기 추가
-    @PostMapping("add-favorites")
-    fun favorites(
-//        @RequestBody favoriteRequest: FavoriteRequest
-    ): RequestEntity<Unit> {
-        TODO()
-    }
-
-    //즐겨찾기 목록
-    @GetMapping("/favorites")
-    fun viewAllmyFavoritesList(): RequestEntity<Unit> {
-        TODO()
-    }
 }
