@@ -11,14 +11,17 @@ import jakarta.persistence.Table
 @Entity
 @Table
 class Seller(
+    @Column(name = "email")
+    var email: String,
+
     @Column(name = "password")
     var password: String,
 
     @Column(name = "name")
     var name: String,
 
-    @Column(name = "seller_account")
-    var seller_account:Long
+    @Column(name = "account")
+    var account:Long
 
 ) {
     @Id
@@ -32,6 +35,6 @@ fun Seller.toResponse():SellerResponse{
         id = id!!,
         name = name,
         password = password,
-        sellerAccount =  seller_account
+        account = account
     )
 }

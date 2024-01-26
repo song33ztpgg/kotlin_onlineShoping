@@ -1,8 +1,8 @@
 package com.example.onlineshoping.project.domain.dto.response
 
-data class CartResponse(
+data class AddressResponse(
     val id:Long,
-    val productId:Long,
     val buyerId:Long,
-    val amount:Int
+    val road_address : String,
+    val is_default:Boolean
 )

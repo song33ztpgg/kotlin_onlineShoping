@@ -1,9 +1,9 @@
 package com.example.onlineshoping.project.domain.dto.request
 
 data class CreateBuyerRequest(
+    val email:String,
     val password:String,
     val name:String,
     val phoneNumber:String,
-    val addressType: String,
-    val buyerBalance:Long
+    val balance:Long
 )

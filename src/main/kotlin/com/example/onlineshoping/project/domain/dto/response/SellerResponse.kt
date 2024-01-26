@@ -4,5 +4,5 @@ data class SellerResponse(
     val id:Long,
     val name:String,
     val password:String,
-    val sellerAccount:Long
+    val account:Long
 )

@@ -4,4 +4,5 @@ import com.example.onlineshoping.project.domain.model.Cart
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface CartRepository:JpaRepository<Cart,Long> {
+//     fun findAllByBuyerId(userId:Long):List<Cart>
 }

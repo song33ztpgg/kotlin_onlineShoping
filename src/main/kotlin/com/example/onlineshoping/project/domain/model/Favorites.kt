@@ -12,11 +12,11 @@ import jakarta.persistence.Table
 @Entity
 @Table
 class Favorites(
-    @Column(name = "buyer_id")
-    var buyer_id:Long,
-
     @Column(name = "product_id")
-    var product_id: Long
+    var product_id: Long,
+
+    @Column(name = "buyer_id")
+    var buyer_id:Long
     ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ class Favorites(
 fun Favorites.toResponse():FavoritesResponse{
     return FavoritesResponse(
         id = id!!,
-        buyerId = buyer_id,
-        productId = product_id
+        productId = product_id,
+        buyerId = buyer_id
     )
 }

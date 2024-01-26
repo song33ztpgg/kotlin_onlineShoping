@@ -6,6 +6,10 @@ import jakarta.persistence.*
 @Entity
 @Table
 class Buyer(
+
+    @Column(name = "email")
+    var email: String,
+
     @Column(name = "password")
     var password: String,
 
@@ -15,11 +19,8 @@ class Buyer(
     @Column(name = "phone_number")
     var phone_number: String,
 
-    @Column(name = "address_type")
-    var address_type: String,
-
-    @Column(name = "buyer_balance")
-    var buyer_balance: Long,
+    @Column(name = "balance")
+    var balance: Long,
 
     ) {
     @Id
@@ -31,11 +32,11 @@ class Buyer(
 fun Buyer.toResponse(): BuyerResponse {
     return BuyerResponse(
         id = id!!,
-        name = name,
+        email = email,
         password = password,
+        name = name,
         phoneNumber = phone_number,
-        addressType = address_type,
-        buyerBalance = buyer_balance
+        balance = balance
     )
 
 }

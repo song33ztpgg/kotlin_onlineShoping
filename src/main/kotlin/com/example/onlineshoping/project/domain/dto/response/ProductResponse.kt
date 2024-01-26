@@ -9,5 +9,6 @@ data class ProductResponse(
     val discountType:String,
     val discount:Int,
     val productInfo:String,
-    val remainingStock:Int
+    val remainingStock:Int,
+    val favoritesCount:Int
 )

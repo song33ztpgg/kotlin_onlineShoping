@@ -12,11 +12,12 @@ import java.util.Date
 @Entity
 @Table
 class Orders(
-    @Column(name = "buyer_id")
-    var buyer_id: Long,
 
     @Column(name = "product_id")
     var product_id: Long,
+
+    @Column(name = "buyer_id")
+    var buyer_id: Long,
 
     @Column(name = "amount")
     var amount: Int,
@@ -36,8 +37,8 @@ class Orders(
 fun Orders.toResponse(): OrderResponse {
     return OrderResponse(
         id = id!!,
-        buyerId = buyer_id,
         productId = product_id,
+        buyerId = buyer_id,
         amount = amount,
         status = status,
         orderDate = order_date

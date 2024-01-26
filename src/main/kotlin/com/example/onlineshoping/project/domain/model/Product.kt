@@ -33,7 +33,10 @@ class Product(
     var product_info:String,
 
     @Column(name = "remaining_stock")
-    var remaining_stock:Int
+    var remaining_stock:Int,
+
+    @Column(name ="favorites_count")
+    var favorites_count:Int
 
 ) {
     @Id
@@ -51,6 +54,7 @@ fun Product.toResponse():ProductResponse{
         discountType = discount_type,
         discount = discount,
         productInfo = product_info,
-        remainingStock = remaining_stock
+        remainingStock = remaining_stock,
+        favoritesCount = favorites_count
     )
 }
