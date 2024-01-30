@@ -5,5 +5,5 @@ data class CreateBuyerRequest(
     val password:String,
     val name:String,
     val phoneNumber:String,
-    val balance:Int
+    val balance:Long
 )

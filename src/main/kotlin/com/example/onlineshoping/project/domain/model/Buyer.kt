@@ -20,9 +20,26 @@ class Buyer(
     var phone_number: String,
 
     @Column(name = "balance")
-    var balance: Int,
+    var balance: Long,
 
-    ) {
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "상대방_id")
+//    val 상대방 모델 : 모델,
+
+//    주소,
+//    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+//    var address: MutableList<Address> = mutableListOf(),
+
+//    ,카트,
+//    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+//    var cart: MutableList<Cart> = mutableListOf(),
+
+//    // 즐겨찾기
+//    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+//    var favorites:MutableList<Favorites> = mutableListOf()
+
+
+) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null

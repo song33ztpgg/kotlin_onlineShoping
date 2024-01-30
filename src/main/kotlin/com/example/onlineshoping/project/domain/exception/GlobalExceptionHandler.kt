@@ -9,8 +9,23 @@ import com.example.onlineshoping.project.domain.exception.ErrorResponse
 @RestControllerAdvice
 class GlobalExceptionHandler {
     @ExceptionHandler(ModelNotFoundException::class)
-    fun handleModelNotFoundException(e:ModelNotFoundException): ResponseEntity<ErrorResponse> {
+    fun handleModelNotFoundException(e: ModelNotFoundException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse(e.message))
+    }
+
+    @ExceptionHandler(IllegalStateException::class)
+    fun handleAlreadyAppliedException(e: IllegalStateException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ErrorResponse(e.message))
+    }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(e: IllegalArgumentException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse(e.message))
+    }
+
+    @ExceptionHandler(InvalidCredentialException::class)
+    fun handleInvalidCredentialException(e: InvalidCredentialException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse(e.message))
     }
 }
 

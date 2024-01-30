@@ -21,13 +21,13 @@ class CartServiceImpl(
 
     //장바구니 전체 보기
     override fun viewCart(): List<CartResponse> {
-   return cartRepository.findAll().map { it.toResponse() }
+        return cartRepository.findAll().map { it.toResponse() }
     }
 
 
     //장바구니에 담기
     override fun addCart(request: AddCartRequest): CartResponse {
-       return  cartRepository.save(
+        return cartRepository.save(
             Cart(
                 product_id = request.productId,
                 buyer_id = request.buyerId,
@@ -39,13 +39,12 @@ class CartServiceImpl(
     //상품결재
 
     @Transactional
-    override fun paymentCart(userId:Long) {
-    println("확인")
+    override fun paymentCart(userId: Long) {
+        println("확인")
 //        val userCart = cartRepository.findByIdOrNull(userId) ?:throw ModelNotFoundException("Cart",userId)
 //        val userCart = cartRepository.findAllByBuyerId(userId)
 //            cartRepository.findAllByBuyerId(userId)
 //        println(userCart[0])
-
 
 
 //        for(u in userCart){
@@ -57,10 +56,6 @@ class CartServiceImpl(
     override fun deleteCancelOrder() {
         TODO("Not yet implemented")
     }
-
-
-
-
 
 
     override fun deleteCart() {

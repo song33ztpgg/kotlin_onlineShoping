@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("buyer")
+@RequestMapping
 class BuyerController(
     private val buyerService: BuyerService
 ) {
@@ -35,7 +35,7 @@ class BuyerController(
     }
 
 
-    @PostMapping
+    @PostMapping("/buyer/signup")
     fun singupBuyer(@RequestBody createBuyerRequest: CreateBuyerRequest): ResponseEntity<BuyerResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)

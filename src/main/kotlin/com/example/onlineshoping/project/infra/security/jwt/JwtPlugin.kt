@@ -35,14 +35,14 @@ class JwtPlugin(
 //        return generateToken(subject, name,Duration.ofHours(accessTokenExpirationHour))
 //    }
 
-    fun generateAccessToken(subject: String, email: String,name:String,phoneNumber:String,balance:Int): String {
+    fun generateAccessToken(subject: String, email: String,name:String,phoneNumber:String,balance:Long): String {
         // subject, 만료기간과 role을 설정합니다.
         return generateToken(subject, email, name,phoneNumber,balance,Duration.ofHours(accessTokenExpirationHour))
     }
 
 
 
-    private fun generateToken(subject: String,email: String,name:String,phoneNumber:String,balance:Int, expirationPeriod: Duration): String {
+    private fun generateToken(subject: String,email: String,name:String,phoneNumber:String,balance:Long, expirationPeriod: Duration): String {
         val claims: Claims = Jwts.claims()
             .add(mapOf(
                 "email" to email,

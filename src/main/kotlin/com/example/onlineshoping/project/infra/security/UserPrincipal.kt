@@ -8,11 +8,11 @@ data class UserPrincipal(
     val email: String,
     val name :String,
     val phoneNumber: String,
-    val balance: Int,
+    val balance: Long,
     val authorities: Collection<GrantedAuthority>
 ) {
 
-    constructor(id: Long, email: String, name:String, phoneNumber:String, balance:Int) : this(
+    constructor(id: Long, email: String, name:String, phoneNumber:String, balance:Long) : this(
         id,
         email,
         name,
@@ -22,13 +22,16 @@ data class UserPrincipal(
     )
 
 
-//    constructor(id: Long,email: String,name:String,phoneNumber:String,balance:Int, roles: Set<String>) : this(
-//        id,
-//        email,
-//        name,
-//        phoneNumber,
-//        balance,
-//        roles.map { SimpleGrantedAuthority("ROLE_$it" ) }
-//    )
+
+    //추가된 부분
+    constructor(id: Long, email: String, name:String, phoneNumber:String, balance:Long, roles: Set<String>) : this(
+        id,
+        email,
+        name,
+        phoneNumber,
+        balance,
+        roles.map { SimpleGrantedAuthority("ROLE_$it" ) }
+    )
+
 
 }

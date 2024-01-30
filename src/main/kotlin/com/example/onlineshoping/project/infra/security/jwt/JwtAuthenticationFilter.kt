@@ -25,19 +25,17 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val jwt = request.getBearerToken()
+        val jwt = request.getBearerToken()  // HTTP 요청 헤더에서 JWT 토큰 추출
 
         if (jwt != null) {
             jwtPlugin.validateToken(jwt)
-                .onSuccess {
-                    val userId = it.payload.subject.toLong()
+                .onSuccess {  //jwt 인증이 되었을 경우
+                    val userId = it.payload.subject.toLong()  // 사용자 ID 추출
                     val email = it.payload.get("email", String::class.java)
                     val name = it.payload.get("name",String::class.java )
                     val phoneNumber = it.payload.get("phoneNumber",String::class.java )
-                    val balance = it.payload.get("balance",Int::class.java )
-
-
-//                    val role = it.payload.get("role", String::class.java)
+                    val balance = it.payload.get("balance", Integer::class.java).toLong()
+//                    val roles = it.payload.get("role", String::class.java)
 
                     val principal = UserPrincipal(
                         id = userId,
@@ -50,19 +48,29 @@ class JwtAuthenticationFilter(
                     // Authentication 구현체 생성
                     val authentication = JwtAuthenticationToken(
                         principal = principal,
-                        // request로 부터 요청 상세정보 생성
+                        // request로 부터 요청 상세정보 생성,추가
                         details =  WebAuthenticationDetailsSource().buildDetails(request)
                     )
-                    // SecurityContext에 authentication 객체 저장
+                    // SecurityContext에 authentication 객체 저장  ,  보안 컨텍스트에 인증 정보 저장
                     SecurityContextHolder.getContext().authentication = authentication
                 }
         }
 
+        //다음 필더에게 전달
         filterChain.doFilter(request, response)
     }
 
+
+    // HTTP 요청 헤더에서 Bearer 토큰 추출
     private fun HttpServletRequest.getBearerToken(): String? {
         val headerValue = this.getHeader(HttpHeaders.AUTHORIZATION) ?: return null
         return BEARER_PATTERN.find(headerValue)?.groupValues?.get(1)
     }
 }
+
+//http요청에서 bear토큰 추출
+//추찰한 토큰 유효성 검사
+//userprincipal생성
+//jwtAuthenticatorToken을 통해 authentication 생성
+//SecurityContextHolder 에 Authentication 저장
+//다음 필터로 요청전달

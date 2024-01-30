@@ -23,6 +23,15 @@ class Seller(
     @Column(name = "account")
     var account:Long
 
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "상대방_id")
+//    val 상대방 모델 : 모델,
+
+//    @OneToMany(mappedBy = "나의id (cart_id)", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+//    var 상대방모델이름: MutableList<모델이름> = mutableListOf()
+
+
+
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

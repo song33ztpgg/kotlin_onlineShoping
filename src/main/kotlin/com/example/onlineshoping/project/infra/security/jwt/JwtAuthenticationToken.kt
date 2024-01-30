@@ -28,3 +28,8 @@ class JwtAuthenticationToken(
     }
 
 }
+
+//9. JwtAuthenticationToken: JwtAuthenticationToken 객체가 생성됨.
+//10. JwtAuthenticationToken: JwtAuthenticationToken의 principal 및 details를 설정함.
+//11. JwtAuthenticationToken: isAuthenticated() 메서드가 호출되어 true를 반환함.
+//12. OncePerRequestFilter: 다음 필터(인증 필터 체인)로 요청 및 응답을 전달함.

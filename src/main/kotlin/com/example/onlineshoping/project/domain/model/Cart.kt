@@ -15,6 +15,20 @@ class Cart(
     @Column(name = "amount")
     var amount:Int,
 
+//물건
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = 'product_id')
+
+
+
+//    구매자
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "buyer_id")
+//    val buyer: Buyer,
+
+
+
+
     ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

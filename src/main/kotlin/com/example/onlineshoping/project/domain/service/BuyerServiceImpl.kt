@@ -21,23 +21,6 @@ class BuyerServiceImpl(
     private val jwtPlugin: JwtPlugin
 ) : BuyerService {
 
-//    override fun login(request: LoginRequest): LoginResponse {
-//        val findUser = buyerRepository.findByEmail(request.email) ?:ModelNotFoundException("Login",null)
-//
-//       if(!passwordEncoder.matches(request.password, findUser.password)){
-//           throw InvalidCredentialException()
-//       }
-//
-//
-//        return LoginResponse(
-//            accessToken = jwtPlugin.generateAccessToken(
-//                subject = "subject 입니다",
-//                role = "롤입니다"
-//            )
-//        )
-//
-//    }
-
 
     override fun login(request:LoginRequest):LoginResponse{
         val findUser = buyerRepository.findByEmail(request.email) ?: throw ModelNotFoundException("Login",null)
