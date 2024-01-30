@@ -20,7 +20,7 @@ class Buyer(
     var phone_number: String,
 
     @Column(name = "balance")
-    var balance: Long,
+    var balance: Int,
 
     ) {
     @Id

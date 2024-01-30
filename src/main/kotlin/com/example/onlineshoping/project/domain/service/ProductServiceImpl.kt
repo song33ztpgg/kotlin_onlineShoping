@@ -4,22 +4,19 @@ import com.example.onlineshoping.project.domain.dto.request.CreateProductRequest
 import com.example.onlineshoping.project.domain.dto.response.ProductResponse
 import com.example.onlineshoping.project.domain.model.Product
 import com.example.onlineshoping.project.domain.model.toResponse
-import com.example.onlineshoping.project.domain.repository.OrderRepository
-import com.example.onlineshoping.project.domain.repository.ProductRepository
+import com.example.onlineshoping.project.domain.repository.ProdcutRepository
 import org.springframework.stereotype.Service
 
 @Service
 class ProductServiceImpl (
-    private val productRepository: ProductRepository
+    private val prodcutRepository: ProdcutRepository
 ):ProductService{
     override fun searchProdcut(reqest: String): List<ProductResponse> {
-//        val product = productRepository.findByCategory(request)
-//        return favoritesRepository.findAll().map { it.toResponse() }
-        return productRepository.findAll().map { it.toResponse() }
+        return prodcutRepository.findAll().map{it.toResponse()}
     }
 
     override fun createProduct(request: CreateProductRequest): ProductResponse {
-       return productRepository.save(
+       return prodcutRepository.save(
            Product(
                seller_id = request.sellerId,
                category = request.category,
@@ -28,7 +25,8 @@ class ProductServiceImpl (
                discount_type = request.discountType,
                discount = request.discount,
                product_info = request.productInfo,
-               remaining_stock = request.remainingStock
+               remaining_stock = request.remainingStock,
+               favorites_count = request.favoritesCount
                )
        ).toResponse()
     }

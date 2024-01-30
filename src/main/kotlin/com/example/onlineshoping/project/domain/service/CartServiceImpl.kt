@@ -15,15 +15,13 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class CartServiceImpl(
-    private val cartRepository: CartRepository,
-    private val orderRepository: OrderRepository,
-    private val orderService: OrderService
+    private val cartRepository: CartRepository
 ) : CartService {
 
 
     //장바구니 전체 보기
     override fun viewCart(): List<CartResponse> {
-        return cartRepository.findAll().map { it.toResponse() }
+   return cartRepository.findAll().map { it.toResponse() }
     }
 
 
@@ -31,13 +29,11 @@ class CartServiceImpl(
     override fun addCart(request: AddCartRequest): CartResponse {
        return  cartRepository.save(
             Cart(
-                buyer_id = request.buyerId,
                 product_id = request.productId,
-                amount = request.amount,
-                status = CartStatus.장바구니
+                buyer_id = request.buyerId,
+                amount = request.amount
             )
         ).toResponse()
-
     }
 
     //상품결재

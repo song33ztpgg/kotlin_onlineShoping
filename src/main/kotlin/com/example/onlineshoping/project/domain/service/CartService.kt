@@ -14,7 +14,7 @@ interface CartService {
     fun addCart( request : AddCartRequest):CartResponse
 
     //장바구니 결재
-    fun paymentCart(ueerId:Long)
+    fun paymentCart(uesrId:Long)
 
     //장바구니 전체취소
     fun deleteCart()

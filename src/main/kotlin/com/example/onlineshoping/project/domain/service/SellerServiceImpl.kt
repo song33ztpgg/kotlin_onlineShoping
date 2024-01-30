@@ -15,9 +15,10 @@ class SellerServiceImpl(
     override fun singupSeller(request: CreateSellerRequest): SellerResponse {
         return sellerRepository.save(
             Seller(
-                name = request.name,
+                email = request.email,
                 password = request.password,
-                seller_account = request.sellerAccount
+                name = request.name,
+                account = request.account
             )
         ).toResponse()
     }
