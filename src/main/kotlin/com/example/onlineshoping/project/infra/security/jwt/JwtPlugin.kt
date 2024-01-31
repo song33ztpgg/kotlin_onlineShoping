@@ -31,17 +31,11 @@ class JwtPlugin(
         }
     }
 
-//    fun generateAccessToken(subject: String, name: String): String {
-//        return generateToken(subject, name,Duration.ofHours(accessTokenExpirationHour))
-//    }
-
+    //buyer 설정
     fun generateAccessToken(subject: String, email: String,name:String,phoneNumber:String,balance:Long): String {
         // subject, 만료기간과 role을 설정합니다.
         return generateToken(subject, email, name,phoneNumber,balance,Duration.ofHours(accessTokenExpirationHour))
     }
-
-
-
     private fun generateToken(subject: String,email: String,name:String,phoneNumber:String,balance:Long, expirationPeriod: Duration): String {
         val claims: Claims = Jwts.claims()
             .add(mapOf(
@@ -49,7 +43,36 @@ class JwtPlugin(
                 "name" to name,
                 "phoneNumber" to phoneNumber,
                 "balance" to balance
-                )).build()
+            )).build()
+
+        val now = Instant.now()
+        val key = Keys.hmacShaKeyFor(secret.toByteArray(StandardCharsets.UTF_8))
+
+        return Jwts.builder()
+            .subject(subject)
+            .issuer(issuer)
+            .issuedAt(Date.from(now))
+            .expiration(Date.from(now.plus(expirationPeriod)))
+            .claims(claims)
+            .signWith(key)
+            .compact()
+    }
+
+
+
+
+    //seller 설정
+    fun generateAccessToken(subject: String, email: String,name:String,account:Long): String {
+        // subject, 만료기간과 role을 설정합니다.
+        return generateToken(subject, email, name,account,Duration.ofHours(accessTokenExpirationHour))
+    }
+    private fun generateToken(subject: String,email: String,name:String,account:Long, expirationPeriod: Duration): String {
+        val claims: Claims = Jwts.claims()
+            .add(mapOf(
+                "email" to email,
+                "name" to name,
+                "account" to account
+            )).build()
 
         val now = Instant.now()
         val key = Keys.hmacShaKeyFor(secret.toByteArray(StandardCharsets.UTF_8))

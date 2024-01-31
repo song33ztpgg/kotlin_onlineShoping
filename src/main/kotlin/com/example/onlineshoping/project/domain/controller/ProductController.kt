@@ -6,6 +6,7 @@ import com.example.onlineshoping.project.domain.service.ProductService
 import org.springframework.http.HttpStatus
 import org.springframework.http.RequestEntity
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,6 +22,7 @@ class ProductController(
 ) {
 
     //상품제작, 판매자만 가능
+//  @PreAuthorize("#seller.name == 'aaa'")
     @PostMapping
     fun createProduct(@RequestBody createProductRequest: CreateProductRequest):ResponseEntity<ProductResponse>{
         return ResponseEntity

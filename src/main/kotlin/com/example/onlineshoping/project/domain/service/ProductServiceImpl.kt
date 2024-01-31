@@ -16,19 +16,38 @@ class ProductServiceImpl (
     }
 
     override fun createProduct(request: CreateProductRequest): ProductResponse {
-       return prodcutRepository.save(
-           Product(
-               seller_id = request.sellerId,
-               category = request.category,
-               name = request.name,
-               price = request.price,
-               discount_type = request.discountType,
-               discount = request.discount,
-               product_info = request.productInfo,
-               remaining_stock = request.remainingStock,
-               favorites_count = request.favoritesCount
-               )
-       ).toResponse()
+
+        val product = Product(
+            seller_id = request.sellerId,
+            category = request.category,
+            name = request.name,
+            price = request.price,
+            discount_type = request.discountType,
+            discount = request.discount,
+            product_info = request.productInfo,
+            remaining_stock = request.remainingStock,
+            favorites_count = 0
+        )
+
+        val productdata =prodcutRepository.save(product).toResponse()
+
+        return productdata
+//        return prodcutRepository.save(
+//           Product(
+//               seller_id = request.sellerId,
+//               category = request.category,
+//               name = request.name,
+//               price = request.price,
+//               discount_type = request.discountType,
+//               discount = request.discount,
+//               product_info = request.productInfo,
+//               remaining_stock = request.remainingStock,
+//               favorites_count = request.favoritesCount
+//               )
+//       ).toResponse()
+
+
+
     }
 
 }

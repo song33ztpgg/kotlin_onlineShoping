@@ -26,7 +26,6 @@ class BuyerController(
 //            .body(buyerService.login(loginRequest))
 //    }
 
-
     @PostMapping("/login")
     fun login(@RequestBody loginRequest: LoginRequest) :ResponseEntity<LoginResponse> {
         return ResponseEntity
@@ -39,7 +38,7 @@ class BuyerController(
     fun singupBuyer(@RequestBody createBuyerRequest: CreateBuyerRequest): ResponseEntity<BuyerResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(buyerService.singupBuyer(createBuyerRequest))
+            .body(buyerService.signupBuyer(createBuyerRequest))
     }
 
 

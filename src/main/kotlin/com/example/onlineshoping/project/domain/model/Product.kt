@@ -21,7 +21,7 @@ class Product(
     var name : String,
 
     @Column(name = "price")
-    var price:Long,
+    var price:Int,
 
     @Column(name = "discount_type")
     var discount_type:String,

@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("seller")
+@RequestMapping("/seller")
 class SellerController(
     private val sellerService: SellerService
 ) {
 
     //판매자 회원가입
-    @PostMapping
+    @PostMapping("/signup")
     fun singupSeller(@RequestBody createSellerRequest: CreateSellerRequest): ResponseEntity<SellerResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(sellerService.singupSeller(createSellerRequest))
+            .body(sellerService.signupSeller(createSellerRequest))
     }
 }

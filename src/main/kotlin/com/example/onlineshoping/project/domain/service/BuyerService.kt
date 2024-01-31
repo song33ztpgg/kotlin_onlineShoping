@@ -10,5 +10,5 @@ interface BuyerService {
 
     fun login(request: LoginRequest): LoginResponse
 
-    fun singupBuyer(request: CreateBuyerRequest): BuyerResponse
+    fun signupBuyer(request: CreateBuyerRequest): BuyerResponse
 }

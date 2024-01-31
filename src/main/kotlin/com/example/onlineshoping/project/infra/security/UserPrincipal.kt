@@ -21,8 +21,6 @@ data class UserPrincipal(
         emptyList() // authorities 필드만 초기화
     )
 
-
-
     //추가된 부분
     constructor(id: Long, email: String, name:String, phoneNumber:String, balance:Long, roles: Set<String>) : this(
         id,

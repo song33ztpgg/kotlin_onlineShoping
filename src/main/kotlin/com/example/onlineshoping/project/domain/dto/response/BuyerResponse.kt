@@ -6,5 +6,5 @@ data class BuyerResponse(
     val password:String,
     val name:String,
     val phoneNumber:String,
-    val balance:Long
+    val balance:Long?
 )
