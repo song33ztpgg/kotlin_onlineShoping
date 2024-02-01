@@ -6,19 +6,19 @@ import jakarta.persistence.*
 @Entity
 @Table
 class Cart(
+
     @Column(name = "product_id")
     var product_id: Long,
 
-    @Column(name = "buyer_id")
-    var buyer_id:Long,
+    @Column(name = "member_id")
+    var member_id: Long,
 
     @Column(name = "amount")
-    var amount:Int,
+    var amount: Int,
 
 //물건
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = 'product_id')
-
 
 
 //    구매자
@@ -27,19 +27,17 @@ class Cart(
 //    val buyer: Buyer,
 
 
-
-
-    ) {
+) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 }
 
-fun Cart.toResponse():CartResponse {
+fun Cart.toResponse(): CartResponse {
     return CartResponse(
         id = id!!,
-        buyerId = buyer_id,
+        memberId = member_id,
         productId = product_id,
-        amount  = amount
+        amount = amount
     )
 }

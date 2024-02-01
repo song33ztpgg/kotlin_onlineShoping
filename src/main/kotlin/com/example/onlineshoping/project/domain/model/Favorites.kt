@@ -15,8 +15,8 @@ class Favorites(
     @Column(name = "product_id")
     var product_id: Long,
 
-    @Column(name = "buyer_id")
-    var buyer_id:Long
+    @Column(name = "member_id")
+    var member_id:Long
 
     //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "상대방_id")
@@ -36,6 +36,6 @@ fun Favorites.toResponse():FavoritesResponse{
     return FavoritesResponse(
         id = id!!,
         productId = product_id,
-        buyerId = buyer_id
+        memberId = member_id
     )
 }

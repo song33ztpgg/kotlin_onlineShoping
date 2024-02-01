@@ -2,7 +2,7 @@ package com.example.onlineshoping.project.domain.dto.response
 
 data class ProductResponse(
     val id:Long,
-    val sellerId:Long,
+    val memberId:Long,
     val category:String,
     val name:String,
     val price:Int,

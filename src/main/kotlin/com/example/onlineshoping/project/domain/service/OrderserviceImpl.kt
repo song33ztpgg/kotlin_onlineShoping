@@ -8,6 +8,7 @@ import com.example.onlineshoping.project.domain.repository.OrderRepository
 import org.springframework.stereotype.Service
 import javax.xml.crypto.Data
 import java.time.LocalDate
+import java.util.*
 
 @Service
 class OrderserviceImpl(
@@ -20,10 +21,12 @@ class OrderserviceImpl(
     override fun createOder(request: CreateOrderRequest): OrderResponse {
         return orderRepository.save(
             Orders(
-                buyer_id = request.buyerId,
+                member_id  = request.memberId,
                 product_id =  request.productId,
                 amount = request.amount,
                 status = request.status,
+                order_date = Date(),
+                road_address= "임시주소"
             )
         ).toResponse()
     }

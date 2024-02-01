@@ -1,7 +1,7 @@
 package com.example.onlineshoping.project.domain.dto.request
 
-data class CreateProductRequest (
-    val memberId:Long,
+data class UpdateProduct(
+    val productId:Long,
     val category:String,
     val name:String,
     val price:Int,

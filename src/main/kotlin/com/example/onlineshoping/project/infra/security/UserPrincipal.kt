@@ -8,26 +8,26 @@ data class UserPrincipal(
     val email: String,
     val name :String,
     val phoneNumber: String,
-    val balance: Long,
+    val account: Long,
     val authorities: Collection<GrantedAuthority>
 ) {
 
-    constructor(id: Long, email: String, name:String, phoneNumber:String, balance:Long) : this(
+    constructor(id: Long, email: String, name:String, phoneNumber:String, account:Long) : this(
         id,
         email,
         name,
         phoneNumber,
-        balance,
+        account,
         emptyList() // authorities 필드만 초기화
     )
 
     //추가된 부분
-    constructor(id: Long, email: String, name:String, phoneNumber:String, balance:Long, roles: Set<String>) : this(
+    constructor(id: Long, email: String, name:String, phoneNumber:String, account:Long, roles: Set<String>) : this(
         id,
         email,
         name,
         phoneNumber,
-        balance,
+        account,
         roles.map { SimpleGrantedAuthority("ROLE_$it" ) }
     )
 

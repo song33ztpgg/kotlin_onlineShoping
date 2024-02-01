@@ -17,7 +17,7 @@ class FavoritesServiceImpl(
         return favoritesRepository.save(
             Favorites(
                 product_id = request.productId,
-                buyer_id = request.buyerId
+                member_id = request.membeerId
             )
         ).toResponse()
     }

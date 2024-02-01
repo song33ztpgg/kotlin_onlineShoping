@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity // 추가!!
+@EnableMethodSecurity  // 인가
 class SecurityConfig(
     private val jwtAuthenticationFilter: JwtAuthenticationFilter,
     private val authenticationEntrypoint: AuthenticationEntryPoint
@@ -25,15 +25,16 @@ class SecurityConfig(
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers(
+                    "/signup",
                     "/login",
-                    "/carts",
-                    "/buyer/signup",
-                    "/seller/signup",
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
-                    "/error"
+                    "/error",
+                    "/h2-console/**"
                 ).permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
+//                    .anyRequest().authenticated()
+
             }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling{

@@ -1,10 +1,11 @@
 package com.example.onlineshoping.project.domain.dto.response
 
-data class BuyerResponse(
+data class MemberResponse(
     val id:Long,
     val email:String,
     val password:String,
     val name:String,
+    val account:Long,
     val phoneNumber:String,
-    val balance:Long?
+    val role:String
 )

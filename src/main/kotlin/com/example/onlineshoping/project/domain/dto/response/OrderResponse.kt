@@ -5,8 +5,9 @@ import java.util.*
 data class OrderResponse(
     val id:Long,
     val productId:Long,
-    val buyerId:Long,
+    val memberId :Long,
     val amount:Int,
     val status:String,
-    val orderDate: Date
+    val orderDate: Date,
+    val roadAddress:String
 )

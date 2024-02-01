@@ -11,8 +11,8 @@ import jakarta.persistence.Table
 @Entity
 @Table
 class Product(
-    @Column(name = "seller_id")
-    var seller_id:Long,
+    @Column(name = "member_id")
+    var member_id:Long,
 
     @Column(name = "category")
     var category:String,
@@ -55,7 +55,7 @@ class Product(
 fun Product.toResponse():ProductResponse{
     return ProductResponse(
         id = id!!,
-        sellerId = seller_id,
+        memberId =member_id,
         category = category,
         name = name,
         price = price,

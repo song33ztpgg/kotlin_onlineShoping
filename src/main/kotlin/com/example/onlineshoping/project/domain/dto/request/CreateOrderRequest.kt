@@ -4,7 +4,7 @@ import java.util.Date
 
 data class CreateOrderRequest (
     val productId:Long,
-    val buyerId:Long,
+    val memberId:Long,
     val amount:Int,
     val status:String,
     val orderDate: Date

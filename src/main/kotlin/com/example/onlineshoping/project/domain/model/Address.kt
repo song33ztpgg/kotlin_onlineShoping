@@ -3,8 +3,8 @@ package com.example.onlineshoping.project.domain.model
 import jakarta.persistence.*
 
 class Address (
-    @Column(name = "buyer_id")
-    var buyer_id: String,
+    @Column(name = "member_id")
+    var member_id: String,
 
     @Column(name = "road_address")
     var road_address: String,

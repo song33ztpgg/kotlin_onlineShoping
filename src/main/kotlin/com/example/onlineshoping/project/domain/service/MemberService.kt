@@ -1,14 +1,14 @@
 package com.example.onlineshoping.project.domain.service
 
 
-import com.example.onlineshoping.project.domain.dto.request.CreateBuyerRequest
+import com.example.onlineshoping.project.domain.dto.request.CreateMemberRequest
 import com.example.onlineshoping.project.domain.dto.request.LoginRequest
-import com.example.onlineshoping.project.domain.dto.response.BuyerResponse
+import com.example.onlineshoping.project.domain.dto.response.MemberResponse
 import com.example.onlineshoping.project.domain.dto.response.LoginResponse
 
-interface BuyerService {
+interface MemberService {
 
     fun login(request: LoginRequest): LoginResponse
 
-    fun signupBuyer(request: CreateBuyerRequest): BuyerResponse
+    fun signupBuyer(request: CreateMemberRequest): MemberResponse
 }

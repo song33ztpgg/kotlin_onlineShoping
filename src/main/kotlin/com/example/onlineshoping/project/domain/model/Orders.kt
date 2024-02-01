@@ -16,8 +16,8 @@ class Orders(
     @Column(name = "product_id")
     var product_id: Long,
 
-    @Column(name = "buyer_id")
-    var buyer_id: Long,
+    @Column(name = "member_id")
+    var member_id: Long,
 
     @Column(name = "amount")
     var amount: Int,
@@ -26,7 +26,10 @@ class Orders(
     var status: String,
 
     @Column(name = "order_date")
-    var order_date: Date  =  Date()
+    var order_date: Date  =  Date(),
+
+    @Column(name = "road_address")
+    var road_address: String
 
 
 
@@ -49,9 +52,10 @@ fun Orders.toResponse(): OrderResponse {
     return OrderResponse(
         id = id!!,
         productId = product_id,
-        buyerId = buyer_id,
+        memberId = member_id,
         amount = amount,
         status = status,
-        orderDate = order_date
+        orderDate = Date(),
+        roadAddress = road_address
     )
 }
