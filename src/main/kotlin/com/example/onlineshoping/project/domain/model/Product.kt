@@ -1,6 +1,7 @@
 package com.example.onlineshoping.project.domain.model
 
 import com.example.onlineshoping.project.domain.dto.response.ProductResponse
+import com.example.onlineshoping.project.domain.model.enum.DiscountTypeStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -11,8 +12,8 @@ import jakarta.persistence.Table
 @Entity
 @Table
 class Product(
-    @Column(name = "member_id")
-    var member_id:Long,
+    @Column(name = "memberId")
+    var memberId:Long,
 
     @Column(name = "category")
     var category:String,
@@ -23,8 +24,8 @@ class Product(
     @Column(name = "price")
     var price:Int,
 
-    @Column(name = "discount_type")
-    var discount_type:String,
+    @Column(name = "discountType")
+    var discountType:DiscountTypeStatus,
 
     @Column(name = "discount")
     var discount : Int,
@@ -32,11 +33,11 @@ class Product(
     @Column(name = "product_info")
     var product_info:String,
 
-    @Column(name = "remaining_stock")
-    var remaining_stock:Int,
+    @Column(name = "remainingStock")
+    var remainingStock:Int,
 
-    @Column(name ="favorites_count")
-    var favorites_count:Int
+    @Column(name ="favoritesCount")
+    var favoritesCount:Int
 
     //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "상대방_id")
@@ -55,14 +56,14 @@ class Product(
 fun Product.toResponse():ProductResponse{
     return ProductResponse(
         id = id!!,
-        memberId =member_id,
+        memberId =memberId,
         category = category,
         name = name,
         price = price,
-        discountType = discount_type,
+        discountType = discountType.name,
         discount = discount,
         productInfo = product_info,
-        remainingStock = remaining_stock,
-        favoritesCount = favorites_count
+        remainingStock = remainingStock,
+        favoritesCount = favoritesCount
     )
 }

@@ -3,14 +3,28 @@ package com.example.onlineshoping.project.domain.model
 import jakarta.persistence.*
 
 class Address (
-    @Column(name = "member_id")
-    var member_id: String,
+    @Column(name = "memberId")
+    var memberId: String,
 
-    @Column(name = "road_address")
-    var road_address: String,
+    @Column(name = "roadAddress")
+    var roadAddress: String,
 
-    @Column(name = "is_default")
-    var is_default: String,
+    @Column(name = "isDefault")
+    var isDefault: String,
+
+
+
+
+//    @Column(name = "member_id")
+//    var member_id: String,
+//
+//    @Column(name = "road_address")
+//    var road_address: String,
+//
+//    @Column(name = "is_default")
+//    var is_default: String,
+
+
 
 
 //    @ManyToOne(fetch = FetchType.LAZY)

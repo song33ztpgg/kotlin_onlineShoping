@@ -1,6 +1,7 @@
 package com.example.onlineshoping.project.domain.model
 
 import com.example.onlineshoping.project.domain.dto.response.OrderResponse
+import com.example.onlineshoping.project.domain.model.enum.OrdersStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -13,23 +14,23 @@ import java.util.Date
 @Table
 class Orders(
 
-    @Column(name = "product_id")
-    var product_id: Long,
+    @Column(name = "productId")
+    var productId: Long,
 
-    @Column(name = "member_id")
-    var member_id: Long,
+    @Column(name = "memberId")
+    var memberId: Long,
 
     @Column(name = "amount")
     var amount: Int,
 
     @Column(name = "status")
-    var status: String,
+    var status: OrdersStatus,
 
-    @Column(name = "order_date")
-    var order_date: Date  =  Date(),
+    @Column(name = "orderDate")
+    var orderDate: Date  =  Date(),
 
-    @Column(name = "road_address")
-    var road_address: String
+    @Column(name = "roadAddress")
+    var roadAddress: String
 
 
 
@@ -51,11 +52,11 @@ class Orders(
 fun Orders.toResponse(): OrderResponse {
     return OrderResponse(
         id = id!!,
-        productId = product_id,
-        memberId = member_id,
+        productId = productId,
+        memberId = memberId,
         amount = amount,
-        status = status,
+        status = status.name,
         orderDate = Date(),
-        roadAddress = road_address
+        roadAddress = roadAddress
     )
 }

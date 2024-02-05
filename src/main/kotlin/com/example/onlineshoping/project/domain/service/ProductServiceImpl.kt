@@ -5,6 +5,7 @@ import com.example.onlineshoping.project.domain.dto.request.UpdateProduct
 import com.example.onlineshoping.project.domain.dto.response.ProductResponse
 import com.example.onlineshoping.project.domain.exception.ModelNotFoundException
 import com.example.onlineshoping.project.domain.model.Product
+import com.example.onlineshoping.project.domain.model.enum.DiscountTypeStatus
 import com.example.onlineshoping.project.domain.model.toResponse
 import com.example.onlineshoping.project.domain.repository.ProdcutRepository
 import com.example.onlineshoping.project.infra.security.jwt.JwtPlugin
@@ -25,15 +26,15 @@ class ProductServiceImpl (
     override fun createProduct(request: CreateProductRequest): ProductResponse {
 
         val product = Product(
-            member_id = request.memberId,
+            memberId = request.memberId,
             category = request.category,
             name = request.name,
             price = request.price,
-            discount_type = request.discountType,
-            discount = request.discount,
+            discountType = DiscountTypeStatus.isNotDiscount,
+            discount =  0,
             product_info = request.productInfo,
-            remaining_stock = request.remainingStock,
-            favorites_count = 0
+            remainingStock = request.remainingStock,
+            favoritesCount = 0
         )
 
         val savedProduct = prodcutRepository.save(product)
@@ -49,10 +50,10 @@ class ProductServiceImpl (
         findProduct.category = category
         findProduct.name = name
         findProduct.price = price
-        findProduct.discount_type = discountType
+        findProduct.discountType = DiscountTypeStatus.valueOf(discountType)
         findProduct.discount = discount
         findProduct.product_info = productInfo
-        findProduct.remaining_stock = remainingStock
+        findProduct.remainingStock = remainingStock
 
 
         return prodcutRepository.save(findProduct).toResponse()

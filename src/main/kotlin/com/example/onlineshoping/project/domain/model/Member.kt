@@ -1,6 +1,7 @@
 package com.example.onlineshoping.project.domain.model
 
 import com.example.onlineshoping.project.domain.dto.response.MemberResponse
+import com.example.onlineshoping.project.domain.model.enum.MemberRole
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -24,11 +25,11 @@ import jakarta.persistence.Table
         @Column(name = "account")
         var account: Long,
 
-        @Column(name = "phone_number")
-        var phone_number: String,
+        @Column(name = "phoneNumber")
+        var phoneNumber: String,
 
         @Column(name = "role")
-        var role: String
+        var role: MemberRole
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "buyer_id")
@@ -52,7 +53,7 @@ fun Member.toResponse():MemberResponse{
         password = password,
         name = name,
         account = account,
-        phoneNumber = phone_number,
-        role = role
+        phoneNumber = phoneNumber,
+        role = role.name
     )
 }

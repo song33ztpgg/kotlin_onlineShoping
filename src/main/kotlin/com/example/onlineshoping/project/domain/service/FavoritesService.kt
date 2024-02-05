@@ -4,8 +4,6 @@ import com.example.onlineshoping.project.domain.dto.request.CreateFavoritesReque
 import com.example.onlineshoping.project.domain.dto.response.FavoritesResponse
 
 interface FavoritesService {
-
-
     fun favorites(request:CreateFavoritesRequest):FavoritesResponse
     fun viewAllmyFavoritesList():List<FavoritesResponse>
 }

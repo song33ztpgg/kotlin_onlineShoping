@@ -12,11 +12,11 @@ import jakarta.persistence.Table
 @Entity
 @Table
 class Favorites(
-    @Column(name = "product_id")
-    var product_id: Long,
+    @Column(name = "productId")
+    var productId: Long,
 
-    @Column(name = "member_id")
-    var member_id:Long
+    @Column(name = "memberId")
+    var memberId:Long
 
     //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "상대방_id")
@@ -35,7 +35,7 @@ class Favorites(
 fun Favorites.toResponse():FavoritesResponse{
     return FavoritesResponse(
         id = id!!,
-        productId = product_id,
-        memberId = member_id
+        productId = productId,
+        memberId = memberId
     )
 }

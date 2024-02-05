@@ -4,4 +4,5 @@ import com.example.onlineshoping.project.domain.model.Orders
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface OrderRepository:JpaRepository<Orders,Long> {
+    fun findAllByMemberId(memberId:Long):List<Orders>
 }

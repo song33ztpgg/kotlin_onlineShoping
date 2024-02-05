@@ -14,13 +14,26 @@ class FavoritesServiceImpl(
 
 
     override fun favorites(request: CreateFavoritesRequest): FavoritesResponse {
-        return favoritesRepository.save(
-            Favorites(
-                product_id = request.productId,
-                member_id = request.membeerId
+        val findByMember = favoritesRepository.findAllByMemberId(request.membeerId)
+        val findByProduct = favoritesRepository.findAllByProductId(request.productId)
+
+            val favorites = Favorites(
+                productId = request.productId,
+                memberId = request.membeerId
             )
-        ).toResponse()
-    }
+
+            val updateFavorites = favoritesRepository.save(favorites)
+
+            return updateFavorites.toResponse()
+        }
+
+
+
+
+
+
+
+
     override fun viewAllmyFavoritesList(): List<FavoritesResponse> {
         return favoritesRepository.findAll().map { it.toResponse() }
     }

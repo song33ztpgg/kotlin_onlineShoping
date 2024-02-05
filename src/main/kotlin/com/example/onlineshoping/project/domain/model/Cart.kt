@@ -7,19 +7,32 @@ import jakarta.persistence.*
 @Table
 class Cart(
 
-    @Column(name = "product_id")
-    var product_id: Long,
+    @Column(name = "productId")
+    var productId: Long,
 
-    @Column(name = "member_id")
-    var member_id: Long,
+    @Column(name = "memberId")
+    var memberId: Long,
 
     @Column(name = "amount")
     var amount: Int,
 
+
+
+
+//    @Column(name = "product_id")
+//    var product_id: Long,
+//
+//    @Column(name = "member_id")
+//    var member_id: Long,
+//
+//    @Column(name = "amount")
+//    var amount: Int,
+
+
+
 //물건
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = 'product_id')
-
 
 //    구매자
 //    @ManyToOne(fetch = FetchType.LAZY)
@@ -36,8 +49,8 @@ class Cart(
 fun Cart.toResponse(): CartResponse {
     return CartResponse(
         id = id!!,
-        memberId = member_id,
-        productId = product_id,
+        memberId = memberId,
+        productId = productId,
         amount = amount
     )
 }
