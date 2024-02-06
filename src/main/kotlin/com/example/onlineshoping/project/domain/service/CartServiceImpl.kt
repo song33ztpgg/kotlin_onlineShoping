@@ -73,8 +73,9 @@ class CartServiceImpl(
             productInfo.remainingStock = productInfo.remainingStock - m.amount
             prodcutRepository.save(productInfo)
 
-
+            //할인된 금액
             var discontedPrice:Int
+            //할인종류
             var discountTypeName = productInfo.discountType.name
             when(discountTypeName) {
                 "fixedAmount" -> discontedPrice = productInfo.price - productInfo.discount
@@ -95,7 +96,8 @@ class CartServiceImpl(
                 amount = m.amount,
                 status =  OrdersStatus.결재완료,
                 discountStatus = DiscountStatus.valueOf(discountTypeName),
-                discount = discontedPrice,   //
+                discount = productInfo.discount ,   //
+                discountAmount = discontedPrice * m.amount,
                 roadAddress = "임시주소"
             )
 

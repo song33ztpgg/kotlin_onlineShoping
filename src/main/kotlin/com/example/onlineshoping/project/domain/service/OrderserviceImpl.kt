@@ -8,6 +8,7 @@ import com.example.onlineshoping.project.domain.exception.ModelNotFoundException
 import com.example.onlineshoping.project.domain.model.Orders
 import com.example.onlineshoping.project.domain.model.enum.OrdersStatus
 import com.example.onlineshoping.project.domain.model.toResponse
+import com.example.onlineshoping.project.domain.repository.MemberRepository
 import com.example.onlineshoping.project.domain.repository.OrderRepository
 import com.example.onlineshoping.project.domain.repository.ProdcutRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -16,11 +17,13 @@ import org.springframework.stereotype.Service
 import javax.xml.crypto.Data
 import java.time.LocalDate
 import java.util.*
+import kotlin.jvm.Throws
 
 @Service
 class OrderserviceImpl(
     private val orderRepository: OrderRepository,
-    private val prodcutRepository: ProdcutRepository
+    private val prodcutRepository: ProdcutRepository,
+    private val memberRepository: MemberRepository
 ):OrderService {
     override fun viewOrder(memberId:Long): List<OrderResponse> {
 
@@ -58,16 +61,22 @@ class OrderserviceImpl(
 
             //가격 돌려받기
 
-            //물건id -> 판매자,가격 찾음
-             val refundProduct =prodcutRepository.findByIdOrNull(updateOrder.productId)!!
-            val refundPrice = refundProduct.price  //원래 가격
-            val refundSeller = refundProduct.memberId //판매자
-            //물건 가격  = 원래 가격 * 개수 * 할인
+            //물건id -> 판매자 찾음
+            val refundProduct =prodcutRepository.findByIdOrNull(updateOrder.productId)!!
+            var refundSeller = refundProduct.memberId //판매자
+            var refundBuyer = updateOrder.memberId  // 구매자
+            val refundAmount = updateOrder.discountAmount // 돌려받아야 함 금액 // 금액 = 10000 + 구매금액
 
             //구매자 판매자 물건가격만큼 복구
-            updateOrder.amount
-            updateOrder.discountStatus
-            updateOrder.memberId
+            val refundSellerInfo = memberRepository.findByIdOrNull(refundSeller) ?: throw ModelNotFoundException("Seller",refundSeller)
+            val refundBuyerInfo = memberRepository.findByIdOrNull(refundBuyer) ?: throw ModelNotFoundException("Seller",refundBuyer)
+
+
+            refundSellerInfo.account -= refundAmount
+            refundBuyerInfo.account += refundAmount
+
+            memberRepository.save(refundSellerInfo)
+            memberRepository.save(refundBuyerInfo)
 
 
         } else if(updateOrder.status.name == "배송중" && member.authorities.toString() == "[ROLE_SELLER]"){

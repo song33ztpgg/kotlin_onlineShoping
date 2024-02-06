@@ -30,8 +30,12 @@ class Orders(
     @Column(name = "discount")
     var discount: Int,
 
+    @Column(name ="discountAmount")
+    var discountAmount : Int,
+
     @Column(name = "status")
     var status: OrdersStatus,
+
     @Column(name = "orderDate")
     var orderDate: Date  =  Date(),
 
@@ -64,6 +68,7 @@ fun Orders.toResponse(): OrderResponse {
         amount = amount,
         discountStatus = discountStatus.name,
         discount = discount,
+        discountAmount = discountAmount,
         status = status.name,
         orderDate = Date(),
 

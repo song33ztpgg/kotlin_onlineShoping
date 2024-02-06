@@ -10,6 +10,7 @@ data class OrderResponse(
     val amount:Int,
     val discountStatus: String,
     val discount : Int,
+    val discountAmount:Int,
     val status:String,
     val orderDate: Date,
     val roadAddress:String
