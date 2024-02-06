@@ -40,18 +40,36 @@ class OrderserviceImpl(
         val orderInfo = orderRepository.findByIdOrNull(orderId) ?: throw ModelNotFoundException("Orders",orderId)
 
         //기존 상태 확인 (중복채크)
-
         if(orderInfo.status  == OrdersStatus.valueOf(status)) {
             throw ErrorResponse("중복된 상황입니다")
         }
 
+        //상태 전환 및 저장
         orderInfo.status  = OrdersStatus.valueOf(status)
         val updateOrder  = orderRepository.save(orderInfo)
 
+
+        //저장된 상태에 따른 행동
         if( updateOrder.status.name == "결재취소"){
+            //물품 재고 복구 시키기
             val productInfo = prodcutRepository.findByIdOrNull(orderInfo.productId) ?:throw  ModelNotFoundException("Product",orderInfo.productId)
              productInfo.remainingStock += updateOrder.amount
             prodcutRepository.save(productInfo).toResponse()
+
+            //가격 돌려받기
+
+            //물건id -> 판매자,가격 찾음
+             val refundProduct =prodcutRepository.findByIdOrNull(updateOrder.productId)!!
+            val refundPrice = refundProduct.price  //원래 가격
+            val refundSeller = refundProduct.memberId //판매자
+            //물건 가격  = 원래 가격 * 개수 * 할인
+
+            //구매자 판매자 물건가격만큼 복구
+            updateOrder.amount
+            updateOrder.discountStatus
+            updateOrder.memberId
+
+
         } else if(updateOrder.status.name == "배송중" && member.authorities.toString() == "[ROLE_SELLER]"){
 
         } else {

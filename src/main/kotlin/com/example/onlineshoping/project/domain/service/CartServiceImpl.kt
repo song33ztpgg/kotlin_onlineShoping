@@ -7,6 +7,7 @@ import com.example.onlineshoping.project.domain.dto.response.OrderResponse
 import com.example.onlineshoping.project.domain.exception.ErrorResponse
 import com.example.onlineshoping.project.domain.exception.ModelNotFoundException
 import com.example.onlineshoping.project.domain.model.*
+import com.example.onlineshoping.project.domain.model.enum.DiscountStatus
 import com.example.onlineshoping.project.domain.model.enum.OrdersStatus
 import com.example.onlineshoping.project.domain.repository.CartRepository
 import com.example.onlineshoping.project.domain.repository.MemberRepository
@@ -93,14 +94,14 @@ class CartServiceImpl(
                 memberId = memberId,
                 amount = m.amount,
                 status =  OrdersStatus.결재완료,
+                discountStatus = DiscountStatus.valueOf(discountTypeName),
+                discount = discontedPrice,   //
                 roadAddress = "임시주소"
             )
 
 
             //구매내역을 생성
             orderRepository.save(orders)
-//            val saveOrders = orderRepository.save(orders)
-//            saveOrders.toResponse()
         }
 
         //금액이 문제 없는지 확인

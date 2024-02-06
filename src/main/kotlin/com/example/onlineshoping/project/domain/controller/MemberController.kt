@@ -8,6 +8,7 @@ import com.example.onlineshoping.project.domain.dto.response.LoginResponse
 import org.springframework.security.core.userdetails.User
 
 import com.example.onlineshoping.project.domain.model.Member
+import com.example.onlineshoping.project.domain.repository.MemberRepository
 import com.example.onlineshoping.project.domain.service.MemberService
 import com.example.onlineshoping.project.infra.security.jwt.JwtPlugin
 import jakarta.servlet.http.HttpServletRequest
@@ -28,7 +29,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping
 class MemberController(
-    private val memberService: MemberService
+    private val memberService: MemberService,
+    private val memberRepository: MemberRepository
 ) {
 
     @PostMapping("/login")
@@ -68,6 +70,12 @@ class MemberController(
             .body(memberService.mypage(memberId))
     }
 
+    @GetMapping("/test4")
+    fun test4(@AuthenticationPrincipal member: User) {
+        println("확인용=-==========")
+        println(memberRepository.countByEmail("string"))
+        println("확인용=-==========")
+    }
 //    @GetMapping("/test1")
 //    fun test(@AuthenticationPrincipal user: org.springframework.security.core.userdetails.User) {
 //        println( user.username.toLong())

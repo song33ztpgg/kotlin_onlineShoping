@@ -5,6 +5,7 @@ import com.example.onlineshoping.project.domain.dto.request.LoginRequest
 import com.example.onlineshoping.project.domain.dto.request.UpdateMemberRequest
 import com.example.onlineshoping.project.domain.dto.response.MemberResponse
 import com.example.onlineshoping.project.domain.dto.response.LoginResponse
+import com.example.onlineshoping.project.domain.exception.ErrorResponse
 import com.example.onlineshoping.project.domain.exception.InvalidCredentialException
 import com.example.onlineshoping.project.domain.exception.ModelNotFoundException
 import com.example.onlineshoping.project.domain.model.Member
@@ -54,6 +55,15 @@ class MemberServiceImpl(
     }
 
     override fun signupBuyer(request: CreateMemberRequest): MemberResponse {
+        val (email) = request
+
+         val findByEmail = memberRepository.findByEmail(email)
+
+        if(findByEmail != null) {
+            throw ErrorResponse("중복된Email있습니다")
+        }
+
+
         val member = Member(
             email = request.email,
             password = passwordEncoder.encode(request.password),

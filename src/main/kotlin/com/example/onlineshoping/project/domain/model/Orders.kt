@@ -1,6 +1,7 @@
 package com.example.onlineshoping.project.domain.model
 
 import com.example.onlineshoping.project.domain.dto.response.OrderResponse
+import com.example.onlineshoping.project.domain.model.enum.DiscountStatus
 import com.example.onlineshoping.project.domain.model.enum.OrdersStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -23,11 +24,17 @@ class Orders(
     @Column(name = "amount")
     var amount: Int,
 
+    @Column(name = "discountStatus")
+    var discountStatus: DiscountStatus,
+
+    @Column(name = "discount")
+    var discount: Int,
+
     @Column(name = "status")
     var status: OrdersStatus,
-
     @Column(name = "orderDate")
     var orderDate: Date  =  Date(),
+
 
     @Column(name = "roadAddress")
     var roadAddress: String
@@ -55,8 +62,11 @@ fun Orders.toResponse(): OrderResponse {
         productId = productId,
         memberId = memberId,
         amount = amount,
+        discountStatus = discountStatus.name,
+        discount = discount,
         status = status.name,
         orderDate = Date(),
+
         roadAddress = roadAddress
     )
 }
