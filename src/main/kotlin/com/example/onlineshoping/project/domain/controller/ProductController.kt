@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.RequestEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+import  org.springframework.security.core.userdetails.User
+
 @RestController
 @RequestMapping("/products")
 class ProductController(
@@ -27,12 +30,15 @@ class ProductController(
 
     //상품제작, 판매자만 가능
     @PostMapping
-    fun createProduct(@RequestBody createProductRequest: CreateProductRequest):ResponseEntity<ProductResponse>{
+    fun createProduct(
+        @AuthenticationPrincipal member :User,
+        @RequestBody createProductRequest: CreateProductRequest):ResponseEntity<ProductResponse>{
+
+        val memberId = member.username.toLong()
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(productService.createProduct(createProductRequest))
+            .body(productService.createProduct(memberId,createProductRequest))
     }
-
 
     //카테고리,이름,가격으로 검색 가능
     @GetMapping("/seach/{name}")
@@ -42,10 +48,8 @@ class ProductController(
             .body(productService.searchProdcut(name))
     }
 
-
-
     //물품수정(재고,설명) - 판매자만 가능
-    @PutMapping("/{productId}")
+    @PutMapping
     fun updateProduct(@RequestBody updateProduct: UpdateProduct):ResponseEntity<ProductResponse>{
         return ResponseEntity
             .status(HttpStatus.OK)

@@ -34,10 +34,10 @@ class MemberServiceImpl(
         }
 
         val accessToken = jwtPlugin.generateAccessToken(
-                subject = findUser.id.toString(),
-                email = findUser.email,
-                role = findUser.role.name
-            )
+            subject = findUser.id.toString(),
+            email = findUser.email,
+            role = findUser.role.name
+        )
 
         return LoginResponse(accessToken)
 
@@ -51,7 +51,6 @@ class MemberServiceImpl(
 //        )
 
 
-
     }
 
     override fun signupBuyer(request: CreateMemberRequest): MemberResponse {
@@ -63,8 +62,8 @@ class MemberServiceImpl(
             phoneNumber = request.phoneNumber,
 
             role = when (request.role) {
-                "seller" -> MemberRole.seller
-                "buyer" -> MemberRole.buyer
+                "seller" -> MemberRole.ROLE_SELLER
+                "buyer" -> MemberRole.ROLE_BUYER
                 else -> throw IllegalArgumentException("Invalid role")
             }
         )
@@ -74,17 +73,15 @@ class MemberServiceImpl(
 
 
     //계좌 충전
-    override fun memberUpdate(request: UpdateMemberRequest): MemberResponse {
-//        val findMember = memberRepository.findByIdOrNull(request.memberId) ?: throw ModelNotFoundException(
-//            "Member",
-//            request.memberId
-//        )
-//        findMember.account += request.account
-//
-//        val updateMember = memberRepository.save(findMember)
-//        return updateMember.toResponse()
+    override fun memberUpdate(memberId: Long, request: UpdateMemberRequest): MemberResponse {
 
-        TODO()
+        val findMember = memberRepository.findByIdOrNull(memberId) ?:
+        throw ModelNotFoundException("Member", memberId)
+
+        findMember.account += request.account
+
+        val updateMember = memberRepository.save(findMember)
+        return updateMember.toResponse()
     }
 
     //나의 정보보기

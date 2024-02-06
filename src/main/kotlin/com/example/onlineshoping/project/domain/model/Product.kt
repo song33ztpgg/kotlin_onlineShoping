@@ -1,7 +1,7 @@
 package com.example.onlineshoping.project.domain.model
 
 import com.example.onlineshoping.project.domain.dto.response.ProductResponse
-import com.example.onlineshoping.project.domain.model.enum.DiscountTypeStatus
+import com.example.onlineshoping.project.domain.model.enum.DiscountStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -25,7 +25,7 @@ class Product(
     var price:Int,
 
     @Column(name = "discountType")
-    var discountType:DiscountTypeStatus,
+    var discountType:DiscountStatus,
 
     @Column(name = "discount")
     var discount : Int,

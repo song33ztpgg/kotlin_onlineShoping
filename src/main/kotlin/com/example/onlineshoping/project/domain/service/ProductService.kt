@@ -7,7 +7,7 @@ import com.example.onlineshoping.project.domain.dto.response.ProductResponse
 interface ProductService {
     fun searchProdcut(request:String):List<ProductResponse>
 
-    fun createProduct(request: CreateProductRequest): ProductResponse
+    fun createProduct(memberId:Long ,request: CreateProductRequest): ProductResponse
 
     fun updateProduct(request: UpdateProduct):ProductResponse
 }

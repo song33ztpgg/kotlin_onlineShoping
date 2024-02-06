@@ -10,6 +10,7 @@ import com.example.onlineshoping.project.domain.model.toResponse
 import com.example.onlineshoping.project.domain.repository.OrderRepository
 import com.example.onlineshoping.project.domain.repository.ProdcutRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Service
 import javax.xml.crypto.Data
 import java.time.LocalDate
@@ -27,13 +28,14 @@ class OrderserviceImpl(
         return responseOrders
     }
 
-    override fun updateOrder(request: UpdateOrdersRequest): OrderResponse {
+    override fun updateOrder(member: User,request: UpdateOrdersRequest): OrderResponse {
 
-        val orderInfo = orderRepository.findByIdOrNull(request.orderId) ?: throw ModelNotFoundException("Orders",request.orderId)
+        member.isEnabled
+        val(orderId,status) = request
+        val orderInfo = orderRepository.findByIdOrNull(orderId) ?: throw ModelNotFoundException("Orders",orderId)
 
-        orderInfo.status  = OrdersStatus.valueOf(request.status)
+        orderInfo.status  = OrdersStatus.valueOf(status)
         val updateOrder  = orderRepository.save(orderInfo)
-
 
         if( updateOrder.status.name == "결재취소"){
             val productInfo = prodcutRepository.findByIdOrNull(orderInfo.productId) ?:throw  ModelNotFoundException("Product",orderInfo.productId)

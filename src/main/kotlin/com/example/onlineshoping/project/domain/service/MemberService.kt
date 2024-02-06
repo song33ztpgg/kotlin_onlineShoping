@@ -13,7 +13,7 @@ interface MemberService {
 
     fun signupBuyer(request: CreateMemberRequest): MemberResponse
 
-    fun memberUpdate(request:UpdateMemberRequest):MemberResponse
+    fun memberUpdate(memberId:Long,request:UpdateMemberRequest):MemberResponse
 
     fun mypage(memberId:Long):MemberResponse
 }

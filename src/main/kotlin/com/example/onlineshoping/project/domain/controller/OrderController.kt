@@ -8,6 +8,7 @@ import com.example.onlineshoping.project.domain.service.OrderService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.User
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -23,19 +24,24 @@ class OrderController(
 ) {
 
     //주문 내역 보기
-    @GetMapping("/member/{memberId}")
-    fun viewOrder(@PathVariable memberId: Long): ResponseEntity<List<OrderResponse>> {
+    @GetMapping("/myList")
+    fun viewOrder(@AuthenticationPrincipal member: User): ResponseEntity<List<OrderResponse>> {
+        val memberId = member.username.toLong()
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(orderService.viewOrder(memberId))
     }
 
     //장바구니 수정
-    @PutMapping("/update/{orderId}")
-    fun updateOrder(@RequestBody updateOrdersRequest: UpdateOrdersRequest): ResponseEntity<OrderResponse> {
+    @PutMapping("/cancel")
+    fun updateOrder(
+        @AuthenticationPrincipal member: User,
+        @RequestBody updateOrdersRequest: UpdateOrdersRequest): ResponseEntity<OrderResponse> {
+//        val memberId = member.username.toLong()
+
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(orderService.updateOrder(updateOrdersRequest))
+            .body(orderService.updateOrder(member,updateOrdersRequest))
     }
 
 }
