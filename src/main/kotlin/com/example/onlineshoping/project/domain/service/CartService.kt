@@ -4,6 +4,7 @@ import com.example.onlineshoping.project.domain.dto.request.AddCartRequest
 import com.example.onlineshoping.project.domain.dto.response.CartResponse
 import com.example.onlineshoping.project.domain.dto.response.MemberResponse
 import com.example.onlineshoping.project.domain.dto.response.OrderResponse
+import org.springframework.security.core.userdetails.User
 
 
 interface CartService {
@@ -19,10 +20,9 @@ interface CartService {
     fun paymentCart(memberId:Long):MemberResponse
 
     //장바구니 전체취소
-    fun deleteCart()
+    fun deleteCart(memberId: Long)
 
-    //주문 취소
-    fun deleteCancelOrder()
+
 
 
 }

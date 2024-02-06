@@ -4,6 +4,8 @@ import com.example.onlineshoping.project.domain.dto.request.AddCartRequest
 import com.example.onlineshoping.project.domain.dto.response.CartResponse
 import com.example.onlineshoping.project.domain.dto.response.MemberResponse
 import com.example.onlineshoping.project.domain.dto.response.OrderResponse
+import com.example.onlineshoping.project.domain.model.toResponse
+import com.example.onlineshoping.project.domain.repository.CartRepository
 import com.example.onlineshoping.project.domain.service.CartService
 
 import org.springframework.http.HttpStatus
@@ -54,20 +56,27 @@ class CartController(
             .status(HttpStatus.OK)
             .body(cartService.paymentCart(memberId))
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //장바구니 전체취소
+
+//    장바구니 전체취소
     @DeleteMapping("/carts")
-    fun deleteCart(): RequestEntity<Unit> {
-        TODO()
+    fun deleteCart(@AuthenticationPrincipal member: User):ResponseEntity<Unit>{
+        val memberId = member.username.toLong()
+
+        return ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .body(cartService.deleteCart(memberId))
     }
 
     //주문 취소
-    @PutMapping("/orders/{orderId}/cancel")
-    fun deleteCancelOrder(): RequestEntity<Unit> {
-        TODO()
-    }
+//    @PutMapping("/orders/{orderId}/cancel")
+//    fun deleteCancelOrder(): RequestEntity<Unit> {
+//        println("확인-------------------------------")
+//        TODO()
+//    }
+
+//    @PutMapping("/orders/{orderId}/cancel")
+//    fun deleteCancelOrder(): RequestEntity<Unit> {
+//        TODO()
+//    }
 
 }

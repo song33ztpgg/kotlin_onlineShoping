@@ -75,8 +75,7 @@ class MemberServiceImpl(
     //계좌 충전
     override fun memberUpdate(memberId: Long, request: UpdateMemberRequest): MemberResponse {
 
-        val findMember = memberRepository.findByIdOrNull(memberId) ?:
-        throw ModelNotFoundException("Member", memberId)
+        val findMember = memberRepository.findByIdOrNull(memberId) ?: throw ModelNotFoundException("Member", memberId)
 
         findMember.account += request.account
 
@@ -89,4 +88,5 @@ class MemberServiceImpl(
         val memberInfo = memberRepository.findByIdOrNull(memberId) ?: throw ModelNotFoundException("Member", memberId)
         return memberInfo.toResponse()
     }
+
 }

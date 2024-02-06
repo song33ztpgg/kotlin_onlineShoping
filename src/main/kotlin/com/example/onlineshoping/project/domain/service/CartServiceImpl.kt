@@ -14,6 +14,7 @@ import com.example.onlineshoping.project.domain.repository.OrderRepository
 import com.example.onlineshoping.project.domain.repository.ProdcutRepository
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -128,14 +129,14 @@ class CartServiceImpl(
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    override fun deleteCancelOrder() {
-        TODO("Not yet implemented")
+
+    override fun deleteCart(memberId: Long) {
+        val memerCart = cartRepository.findByIdOrNull(memberId) ?: throw  ModelNotFoundException("cart",memberId)
+        cartRepository.delete(memerCart)
     }
 
 
-    override fun deleteCart() {
-        TODO("Not yet implemented")
-    }
+
 }
 
 

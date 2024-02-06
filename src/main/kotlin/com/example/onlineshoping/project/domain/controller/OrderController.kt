@@ -33,7 +33,7 @@ class OrderController(
     }
 
     //장바구니 수정
-    @PutMapping("/cancel")
+    @PutMapping("/update")
     fun updateOrder(
         @AuthenticationPrincipal member: User,
         @RequestBody updateOrdersRequest: UpdateOrdersRequest): ResponseEntity<OrderResponse> {

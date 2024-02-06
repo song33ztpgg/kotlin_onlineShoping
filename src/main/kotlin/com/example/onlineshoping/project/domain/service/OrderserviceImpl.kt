@@ -3,6 +3,7 @@ package com.example.onlineshoping.project.domain.service
 import com.example.onlineshoping.project.domain.dto.request.CreateOrderRequest
 import com.example.onlineshoping.project.domain.dto.request.UpdateOrdersRequest
 import com.example.onlineshoping.project.domain.dto.response.OrderResponse
+import com.example.onlineshoping.project.domain.exception.ErrorResponse
 import com.example.onlineshoping.project.domain.exception.ModelNotFoundException
 import com.example.onlineshoping.project.domain.model.Orders
 import com.example.onlineshoping.project.domain.model.enum.OrdersStatus
@@ -30,9 +31,19 @@ class OrderserviceImpl(
 
     override fun updateOrder(member: User,request: UpdateOrdersRequest): OrderResponse {
 
-        member.isEnabled
+        when(member.authorities.toString()){
+            "[ROLE_BUYER]" -> println("buyer")
+            "[ROLE_SELLER]" -> println("seller")
+            else -> println("xxxx")
+        }
         val(orderId,status) = request
         val orderInfo = orderRepository.findByIdOrNull(orderId) ?: throw ModelNotFoundException("Orders",orderId)
+
+        //기존 상태 확인 (중복채크)
+
+        if(orderInfo.status  == OrdersStatus.valueOf(status)) {
+            throw ErrorResponse("중복된 상황입니다")
+        }
 
         orderInfo.status  = OrdersStatus.valueOf(status)
         val updateOrder  = orderRepository.save(orderInfo)
@@ -41,8 +52,11 @@ class OrderserviceImpl(
             val productInfo = prodcutRepository.findByIdOrNull(orderInfo.productId) ?:throw  ModelNotFoundException("Product",orderInfo.productId)
              productInfo.remainingStock += updateOrder.amount
             prodcutRepository.save(productInfo).toResponse()
-        }
+        } else if(updateOrder.status.name == "배송중" && member.authorities.toString() == "[ROLE_SELLER]"){
 
+        } else {
+
+        }
 
         return updateOrder.toResponse()
     }

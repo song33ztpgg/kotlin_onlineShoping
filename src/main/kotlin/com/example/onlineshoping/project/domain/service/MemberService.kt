@@ -16,4 +16,5 @@ interface MemberService {
     fun memberUpdate(memberId:Long,request:UpdateMemberRequest):MemberResponse
 
     fun mypage(memberId:Long):MemberResponse
+
 }
