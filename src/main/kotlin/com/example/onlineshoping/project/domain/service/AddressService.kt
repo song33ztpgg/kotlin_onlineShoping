@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping
 
 interface AddressService {
 
-
-    fun getAddress(memberId: Long): List<AddressResponse>
-
     //주소 저장하기
     fun createAddress(memberId: Long, createAddress: CreateAddress): AddressResponse
 
+    //주소 가져오기
+    fun getAddress(memberId: Long): List<AddressResponse>
 
     //주소 메인 정하기
     fun selectMainAddress(memberId: Long, updateAddressDefault: UpdateAddressDefault): AddressResponse

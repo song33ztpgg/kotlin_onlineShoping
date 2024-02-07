@@ -16,12 +16,15 @@ import org.springframework.stereotype.Service
 class AddressServiceImpl(
     private val addressRepository: AddressRepository
 ) : AddressService {
+
+    //주소 가져오기
     override fun getAddress(memberId: Long): List<AddressResponse> {
         val findMyAddress = addressRepository.findAllByMemberId(memberId)
         val mappingAddress = findMyAddress.map { it.toResponse() }
         return mappingAddress
     }
 
+    //주소 만들기
     override fun createAddress(memberId: Long, request: CreateAddress): AddressResponse {
         val (roadAddress, addressDefault) = request
 
@@ -30,16 +33,18 @@ class AddressServiceImpl(
             roadAddress = roadAddress,
             addressDefault = addressDefault
         )
-        val findMymainAddress = addressRepository.findByMemberIdAndAddressDefault(memberId, true)
 
-        if (findMymainAddress != null && addressDefault == true) {
-            findMymainAddress.addressDefault = false
-            addressRepository.save(findMymainAddress)
+        //기본주소가 true인 주소 찾기
+        val existingTrueAddress = addressRepository.findByMemberIdAndAddressDefault(memberId, true)
+
+        if (existingTrueAddress != null && addressDefault == true) {
+            existingTrueAddress.addressDefault = false
+            addressRepository.save(existingTrueAddress)
         }
 
-        val mappingAddress = addressRepository.save(createAddress).toResponse()
-
-        return mappingAddress
+        val saveAddress = addressRepository.save(createAddress)
+        val mappingCreateAddress = saveAddress.toResponse()
+        return mappingCreateAddress
     }
 
     override fun updateAddress(memberId: Long, request: UpdateAddress): AddressResponse {
@@ -47,6 +52,7 @@ class AddressServiceImpl(
 
         val findAddress = addressRepository.findByIdOrNull(addressId) ?: throw ModelNotFoundException("Address", addressId)
 
+        //수정할 에러 메세지
         if (findAddress.memberId != memberId) {
             throw ErrorResponse("잘못된 주소를 선택하였습니다")
         }
@@ -54,8 +60,8 @@ class AddressServiceImpl(
         findAddress.roadAddress = roadAddress
 
         val updateAddress = addressRepository.save(findAddress)
-
-        return updateAddress.toResponse()
+        val mappingUpdateAddress = updateAddress.toResponse()
+        return mappingUpdateAddress
 
     }
 

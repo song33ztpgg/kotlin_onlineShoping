@@ -21,6 +21,16 @@ import org.springframework.web.bind.annotation.RestController
 class AddressController(
     private val addressService: AddressService
 ) {
+    //주소 저장하기
+    @PostMapping
+    fun createAddress(
+        @AuthenticationPrincipal member: User,
+        @RequestBody createAddress: CreateAddress):ResponseEntity<AddressResponse>{
+        val memberId = member.username.toLong()
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(addressService.createAddress(memberId,createAddress))
+    }
 
     //주소 불러오기
     @GetMapping
@@ -31,18 +41,11 @@ class AddressController(
             .body(addressService.getAddress(memberId))
     }
 
-    //주소 저장하기
-    @PostMapping
-    fun createAddress(@AuthenticationPrincipal member: User,@RequestBody createAddress: CreateAddress):ResponseEntity<AddressResponse>{
-        val memberId = member.username.toLong()
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(addressService.createAddress(memberId,createAddress))
-    }
-
     //주소 메인 정하기
     @PutMapping("/isDefault")
-    fun selectMainAddress(@AuthenticationPrincipal member:User,@RequestBody updateAddressDefault: UpdateAddressDefault) :ResponseEntity<AddressResponse>{
+    fun selectMainAddress(
+        @AuthenticationPrincipal member:User,
+        @RequestBody updateAddressDefault: UpdateAddressDefault) :ResponseEntity<AddressResponse>{
         val memberId  = member.username.toLong()
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -51,7 +54,9 @@ class AddressController(
 
     //주소 수정하기
     @PutMapping("/update")
-    fun updateAddress(@AuthenticationPrincipal member:User,@RequestBody updateAddress: UpdateAddress) :ResponseEntity<AddressResponse>{
+    fun updateAddress(
+        @AuthenticationPrincipal member:User,
+        @RequestBody updateAddress: UpdateAddress) :ResponseEntity<AddressResponse>{
         val memberId  = member.username.toLong()
         return ResponseEntity
             .status(HttpStatus.OK)

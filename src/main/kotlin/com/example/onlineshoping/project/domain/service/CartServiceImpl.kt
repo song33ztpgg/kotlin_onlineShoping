@@ -9,10 +9,7 @@ import com.example.onlineshoping.project.domain.exception.ModelNotFoundException
 import com.example.onlineshoping.project.domain.model.*
 import com.example.onlineshoping.project.domain.model.enum.DiscountStatus
 import com.example.onlineshoping.project.domain.model.enum.OrdersStatus
-import com.example.onlineshoping.project.domain.repository.CartRepository
-import com.example.onlineshoping.project.domain.repository.MemberRepository
-import com.example.onlineshoping.project.domain.repository.OrderRepository
-import com.example.onlineshoping.project.domain.repository.ProdcutRepository
+import com.example.onlineshoping.project.domain.repository.*
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.userdetails.User
@@ -25,7 +22,8 @@ class CartServiceImpl(
     private val cartRepository: CartRepository,
     private val memberRepository: MemberRepository,
     private val prodcutRepository: ProdcutRepository,
-    private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
+    private val addressRepository: AddressRepository
 ) : CartService {
 
 
@@ -73,8 +71,9 @@ class CartServiceImpl(
             productInfo.remainingStock = productInfo.remainingStock - m.amount
             prodcutRepository.save(productInfo)
 
-            //할인된 금액
+            //할인된 최종금액
             var discontedPrice:Int
+
             //할인종류
             var discountTypeName = productInfo.discountType.name
             when(discountTypeName) {
@@ -90,6 +89,14 @@ class CartServiceImpl(
             //전체금액 누적합산
                 totalPay += discontedPrice * m.amount
 
+
+            val addressInfo = addressRepository.findByMemberIdAndAddressDefault(memberId,true)
+
+            if(addressInfo == null) {
+                throw ErrorResponse("기존 주소를 지정하지 않았습니다")
+            }
+
+
             val orders = Orders(
                 productId = productInfo.id!!,
                 memberId = memberId,
@@ -98,7 +105,7 @@ class CartServiceImpl(
                 discountStatus = DiscountStatus.valueOf(discountTypeName),
                 discount = productInfo.discount ,   //
                 discountAmount = discontedPrice * m.amount,
-                roadAddress = "임시주소"
+                roadAddress = addressInfo.roadAddress
             )
 
 

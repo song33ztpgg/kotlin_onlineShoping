@@ -9,12 +9,12 @@ import com.example.onlineshoping.project.domain.dto.response.LoginResponse
 
 interface MemberService {
 
-    fun login(request: LoginRequest): LoginResponse
+    fun login(loginRequest: LoginRequest): LoginResponse
 
-    fun signupBuyer(request: CreateMemberRequest): MemberResponse
+    fun signupMember(createMemberRequest: CreateMemberRequest): MemberResponse
 
-    fun memberUpdate(memberId:Long,request:UpdateMemberRequest):MemberResponse
+    fun updateMember(memberId:Long,updateMemberRequest:UpdateMemberRequest):MemberResponse
 
-    fun mypage(memberId:Long):MemberResponse
+    fun myPage(memberId:Long):MemberResponse
 
 }

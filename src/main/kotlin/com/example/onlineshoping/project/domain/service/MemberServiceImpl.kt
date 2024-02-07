@@ -26,10 +26,12 @@ class MemberServiceImpl(
 ) : MemberService {
 
 
+    //로그인
     override fun login(request: LoginRequest): LoginResponse {
 
         val findUser = memberRepository.findByEmail(request.email) ?: throw ModelNotFoundException("login", null)
 
+        //수정할 에러 메세지
         if (!passwordEncoder.matches(request.password, findUser.password)) {
             throw InvalidCredentialException()
         }
@@ -41,62 +43,61 @@ class MemberServiceImpl(
         )
 
         return LoginResponse(accessToken)
-
-//        val accessToken = jwtPlugin.generateAccessToken(
-//            subject = findUser.id.toString(),
-//            email = findUser.email,
-////            name = findUser.name,
-////            account = findUser.account,
-////            phoneNumber = findUser.phoneNumber,
-//            role = findUser.role.na
-//        )
-
-
     }
 
-    override fun signupBuyer(request: CreateMemberRequest): MemberResponse {
-        val (email) = request
+    //회원가입
+    override fun signupMember(request: CreateMemberRequest): MemberResponse {
+        val (email,password,name,phoneNumber,role) = request
 
-         val findByEmail = memberRepository.findByEmail(email)
+        val findByEmail = memberRepository.findByEmail(email)
 
+
+        //수정할 에러 메세지
         if(findByEmail != null) {
             throw ErrorResponse("중복된Email있습니다")
         }
 
 
-        val member = Member(
-            email = request.email,
-            password = passwordEncoder.encode(request.password),
-            name = request.name,
+        val createMember = Member(
+            email = email,
+            password = passwordEncoder.encode(password),
+            name = name,
             account = 10000,
-            phoneNumber = request.phoneNumber,
+            phoneNumber = phoneNumber,
 
-            role = when (request.role) {
+            role = when (role) {
                 "seller" -> MemberRole.ROLE_SELLER
                 "buyer" -> MemberRole.ROLE_BUYER
+                //수정할 에러 메세지
                 else -> throw IllegalArgumentException("Invalid role")
             }
         )
-        val saveMember = memberRepository.save(member)
-        return saveMember.toResponse()
+
+        val saveMember = memberRepository.save(createMember)
+        val mappingSaveMember = saveMember.toResponse()
+        return mappingSaveMember
     }
+
 
 
     //계좌 충전
-    override fun memberUpdate(memberId: Long, request: UpdateMemberRequest): MemberResponse {
-
+    override fun updateMember(memberId: Long, request: UpdateMemberRequest): MemberResponse {
+        val (account) = request
         val findMember = memberRepository.findByIdOrNull(memberId) ?: throw ModelNotFoundException("Member", memberId)
 
-        findMember.account += request.account
+        findMember.account += account
 
         val updateMember = memberRepository.save(findMember)
-        return updateMember.toResponse()
+        val mappingUpdateMember = updateMember.toResponse()
+        return mappingUpdateMember
+
     }
 
     //나의 정보보기
-    override fun mypage(memberId: Long): MemberResponse {
+    override fun myPage(memberId: Long): MemberResponse {
         val memberInfo = memberRepository.findByIdOrNull(memberId) ?: throw ModelNotFoundException("Member", memberId)
-        return memberInfo.toResponse()
+        val mappingMemberInfo = memberInfo.toResponse()
+        return mappingMemberInfo
     }
 
 }
