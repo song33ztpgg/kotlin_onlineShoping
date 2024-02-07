@@ -3,25 +3,21 @@ package com.example.onlineshoping.project.domain.service
 import com.example.onlineshoping.project.domain.dto.request.AddCartRequest
 import com.example.onlineshoping.project.domain.dto.response.CartResponse
 import com.example.onlineshoping.project.domain.dto.response.MemberResponse
-import com.example.onlineshoping.project.domain.dto.response.OrderResponse
 import com.example.onlineshoping.project.domain.exception.ErrorResponse
 import com.example.onlineshoping.project.domain.exception.ModelNotFoundException
 import com.example.onlineshoping.project.domain.model.*
 import com.example.onlineshoping.project.domain.model.enum.DiscountStatus
 import com.example.onlineshoping.project.domain.model.enum.OrdersStatus
 import com.example.onlineshoping.project.domain.repository.*
-import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 
 @Service
 class CartServiceImpl(
     private val cartRepository: CartRepository,
     private val memberRepository: MemberRepository,
-    private val prodcutRepository: ProdcutRepository,
+    private val productRepository: ProductRepository,
     private val orderRepository: OrderRepository,
     private val addressRepository: AddressRepository
 ) : CartService {
@@ -35,18 +31,20 @@ class CartServiceImpl(
 
     //장바구니에 담기
     override fun addCart(memberId: Long,request: AddCartRequest): CartResponse {
-        val cart = Cart(
+        val (productId,amount) = request
+
+        val createCart = Cart(
             memberId = memberId,
-            productId = request.productId,
-            amount = request.amount
+            productId = productId,
+            amount = amount
         )
 
-        val savedCart = cartRepository.save(cart)
-        return savedCart.toResponse()
+        val savedCart = cartRepository.save(createCart)
+        val mappingSaveCart = savedCart.toResponse()
+        return mappingSaveCart
     }
 
-    //장바구니 결재
-    //정버규나 결제 후 삭제
+    //장바구니 결제 후 삭제, 주문내역 생성
     @Transactional
     override fun paymentCart(memberId: Long):MemberResponse{
 
@@ -55,65 +53,64 @@ class CartServiceImpl(
         val memberInfo = memberRepository.findByIdOrNull(memberId) ?:throw ModelNotFoundException("Member", memberId)
         var totalPay  = 0
 
-
         for(m in buyerCart){
+
             //장바구니에 담긴 productId를 통해 물건을 검색
-            val productInfo = prodcutRepository.findByIdOrNull(m.productId)?: throw ModelNotFoundException("Cart", memberId)
+            val productInfo = productRepository.findByIdOrNull(m.productId)?: throw ModelNotFoundException("Cart", memberId)
+
             //물건에 판매자 검색
             val sellerInfo = memberRepository.findByIdOrNull(productInfo.memberId)?: throw  ModelNotFoundException("Memeber", memberId)
 
             //수량이 문제 없는지 확인
+            //수정할 에러 메세지
             if(productInfo.remainingStock < m.amount){
                throw ErrorResponse("재고가 부족합니다")
             }
 
             //수량 차감
             productInfo.remainingStock = productInfo.remainingStock - m.amount
-            prodcutRepository.save(productInfo)
+            productRepository.save(productInfo)
 
             //할인된 최종금액
             var discontedPrice:Int
 
             //할인종류
-            var discountTypeName = productInfo.discountType.name
+            val discountTypeName = productInfo.discountType.name
             when(discountTypeName) {
                 "fixedAmount" -> discontedPrice = productInfo.price - productInfo.discount
                 "rate" -> discontedPrice = (productInfo.price * (100-productInfo.discount))/100
                 else -> discontedPrice = productInfo.price
             }
 
-
             //판매자에게 금액 송금
             sellerInfo.account += discontedPrice * m.amount
-
             //전체금액 누적합산
-                totalPay += discontedPrice * m.amount
-
+            totalPay += discontedPrice * m.amount
 
             val addressInfo = addressRepository.findByMemberIdAndAddressDefault(memberId,true)
 
+            //수정할 에러 메세지
             if(addressInfo == null) {
                 throw ErrorResponse("기존 주소를 지정하지 않았습니다")
             }
 
-
-            val orders = Orders(
+            val createOrders = Orders(
                 productId = productInfo.id!!,
                 memberId = memberId,
                 amount = m.amount,
                 status =  OrdersStatus.결재완료,
                 discountStatus = DiscountStatus.valueOf(discountTypeName),
-                discount = productInfo.discount ,   //
+                discount = productInfo.discount ,
                 discountAmount = discontedPrice * m.amount,
                 roadAddress = addressInfo.roadAddress
             )
 
-
             //구매내역을 생성
-            orderRepository.save(orders)
+            orderRepository.save(createOrders)
         }
 
         //금액이 문제 없는지 확인
+        //수정할 에러 메세지
         if(memberInfo.account < totalPay){
             throw ErrorResponse("금액이 부족합니다")
         }
@@ -127,22 +124,13 @@ class CartServiceImpl(
             cartRepository.delete(m)
         }
 
-        return memberInfo.toResponse()
+        val mappingMemberInfo = memberInfo.toResponse()
+        return mappingMemberInfo
     }
 
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     override fun deleteCart(memberId: Long) {
-        val memerCart = cartRepository.findByIdOrNull(memberId) ?: throw  ModelNotFoundException("cart",memberId)
-        cartRepository.delete(memerCart)
+        val memberCart = cartRepository.findByIdOrNull(memberId) ?: throw  ModelNotFoundException("cart",memberId)
+        cartRepository.delete(memberCart)
     }
 
 

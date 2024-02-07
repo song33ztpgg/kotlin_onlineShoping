@@ -9,5 +9,5 @@ interface OrderService {
 
     fun viewOrder(memberId:Long):List<OrderResponse>
 
-    fun updateOrder(member: User,requet: UpdateOrdersRequest):OrderResponse
+    fun updateOrder(member: User,request: UpdateOrdersRequest):OrderResponse
 }

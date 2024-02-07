@@ -5,5 +5,5 @@ import com.example.onlineshoping.project.domain.dto.response.FavoritesResponse
 
 interface FavoritesService {
     fun favorites(memberId :Long,request:CreateFavoritesRequest):String
-    fun viewAllmyFavoritesList(memberId: Long):List<FavoritesResponse>
+    fun viewAllFavoritesList(memberId: Long):List<FavoritesResponse>
 }

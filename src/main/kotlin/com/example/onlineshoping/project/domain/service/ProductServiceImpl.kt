@@ -8,13 +8,13 @@ import com.example.onlineshoping.project.domain.model.Product
 import com.example.onlineshoping.project.domain.model.enum.DiscountStatus
 import com.example.onlineshoping.project.domain.model.toResponse
 import com.example.onlineshoping.project.domain.repository.FavoritesRepository
-import com.example.onlineshoping.project.domain.repository.ProdcutRepository
+import com.example.onlineshoping.project.domain.repository.ProductRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class ProductServiceImpl (
-    private val productRepository: ProdcutRepository,
+    private val productRepository: ProductRepository,
     private val favoritesRepository: FavoritesRepository
 ):ProductService{
 

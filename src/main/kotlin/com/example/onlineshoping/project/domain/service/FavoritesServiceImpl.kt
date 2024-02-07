@@ -4,58 +4,59 @@ import com.example.onlineshoping.project.domain.dto.request.CreateFavoritesReque
 import com.example.onlineshoping.project.domain.dto.response.FavoritesResponse
 import com.example.onlineshoping.project.domain.exception.ModelNotFoundException
 import com.example.onlineshoping.project.domain.model.Favorites
-import com.example.onlineshoping.project.domain.model.enum.DiscountStatus
 import com.example.onlineshoping.project.domain.model.toResponse
 import com.example.onlineshoping.project.domain.repository.FavoritesRepository
-import com.example.onlineshoping.project.domain.repository.ProdcutRepository
+import com.example.onlineshoping.project.domain.repository.ProductRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import kotlin.jvm.Throws
 
 @Service
 class FavoritesServiceImpl(
     private val favoritesRepository: FavoritesRepository,
-    private val productRepository: ProdcutRepository
-):FavoritesService{
+    private val productRepository: ProductRepository
+) : FavoritesService {
 
 
     //즐겨찾기 추가,제거
-    override fun favorites(memberId :Long,request: CreateFavoritesRequest): String {
+    override fun favorites(memberId: Long, request: CreateFavoritesRequest): String {
 
         val (productId) = request
 
-        val result =  favoritesRepository.findByMemberIdAndProductId(memberId,productId)
-        val findProduct = productRepository.findByIdOrNull(productId) ?:throw ModelNotFoundException("Product",productId)
+        val findFavorite = favoritesRepository.findByMemberIdAndProductId(memberId, productId)
+        val findProduct =
+            productRepository.findByIdOrNull(productId) ?: throw ModelNotFoundException("Product", productId)
 
-        if(result == null) {
-            val favorites = Favorites(
+        //기존 즐겨찾기 상태 여부에 따라 제작 및 삭제
+        if (findFavorite == null) {
+
+            val createFavorite = Favorites(
                 productId = productId,
                 memberId = memberId
             )
 
-            favoritesRepository.save(favorites)
+            favoritesRepository.save(createFavorite)
 
+            //물건의 좋아요 수 업데이트
             findProduct.favoritesCount = favoritesRepository.countByProductId(productId)
             productRepository.save(findProduct).toResponse()
 
             return "즐겨찾기 추가가 되었습니다"
         } else {
 
-            favoritesRepository.delete(result)
+            favoritesRepository.delete(findFavorite)
 
             findProduct.favoritesCount = favoritesRepository.countByProductId(productId)
             productRepository.save(findProduct).toResponse()
 
-
             return "즐겨찾기를 취소 하였습니다"
         }
 
-        }
+    }
 
     //즐겨찾기 보기
-    override fun viewAllmyFavoritesList(memberId: Long): List<FavoritesResponse> {
-        val findMemberByFavorites = favoritesRepository.findAllByMemberId(memberId)
-        val mappingFavorites = findMemberByFavorites.map { it.toResponse() }
+    override fun viewAllFavoritesList(memberId: Long): List<FavoritesResponse> {
+        val findAllMemberByFavorites = favoritesRepository.findAllByMemberId(memberId)
+        val mappingFavorites = findAllMemberByFavorites.map { it.toResponse() }
         return mappingFavorites
     }
 
