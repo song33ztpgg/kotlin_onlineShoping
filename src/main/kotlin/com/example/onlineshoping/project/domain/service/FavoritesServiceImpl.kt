@@ -55,8 +55,8 @@ class FavoritesServiceImpl(
     //즐겨찾기 보기
     override fun viewAllmyFavoritesList(memberId: Long): List<FavoritesResponse> {
         val findMemberByFavorites = favoritesRepository.findAllByMemberId(memberId)
-        val favoritesMapping = findMemberByFavorites.map { it.toResponse() }
-        return favoritesMapping
+        val mappingFavorites = findMemberByFavorites.map { it.toResponse() }
+        return mappingFavorites
     }
 
 

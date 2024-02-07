@@ -1,16 +1,19 @@
 package com.example.onlineshoping.project.domain.model
 
+import com.example.onlineshoping.project.domain.dto.response.AddressResponse
 import jakarta.persistence.*
 
+@Entity
+@Table
 class Address (
     @Column(name = "memberId")
-    var memberId: String,
+    var memberId: Long,
 
     @Column(name = "roadAddress")
     var roadAddress: String,
 
-    @Column(name = "isDefault")
-    var isDefault: String,
+    @Column(name = "addressDefault")
+    var addressDefault: Boolean,
 
 
 
@@ -40,4 +43,13 @@ class Address (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+}
+
+fun Address.toResponse():AddressResponse{
+    return AddressResponse(
+        id = id!!,
+        memberId = memberId,
+        roadAddress = roadAddress,
+        addressDefault = addressDefault
+    )
 }
